@@ -1,5 +1,7 @@
 
-public class Marque : PionMarqueCode
+using UnityEngine;
+
+public class Marque : MonoBehaviour// : PionMarqueCode
 {
 
 

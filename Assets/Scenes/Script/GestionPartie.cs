@@ -7,6 +7,10 @@ public class GestionPartie : MonoBehaviour
     [SerializeField] protected GameObject boule;
     [SerializeField] protected GameObject marque;
     [SerializeField] protected Code code;
+    [SerializeField] protected Pion pion;
+
+    int indicePion;
+    Vector3 pos;
 
     //private Code code;
 
@@ -15,54 +19,77 @@ public class GestionPartie : MonoBehaviour
     {
 
         // Initialisation de La partie
-
-        //code = new Code();
         init_partie();
 
-        //---------------------------------- TEST
-        //GameObject pion;
-        //Vector3 pos = new Vector3(0, 5, 0);
-        //Quaternion rot = new Quaternion(0, 0, 0, 0);
+        indicePion = 0;
 
-        //Material m_Material;
-
-        //pion = Instantiate<GameObject>(boule, pos, rot);
-
-        //m_Material = pion.GetComponent<Renderer>().material;
-
-        //Debug.Log("Position : " + m_Material);
-
-
-        }
+    }
             
     void Update()
     {
+        pos = new Vector3(2 * indicePion, 5, 0);
 
         if (Input.GetKey(KeyCode.T))
         {
             code.Triche();
         }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            pion.CreationPion(pos, Globales.RED_COLOR);
+            indicePion++;
+            Debug.Log("Création pion red");
+        }
+
+        if (Input.GetKeyDown(KeyCode.B))
+        {
+            pion.CreationPion(pos, Globales.BLUE_COLOR);
+            indicePion++;
+            Debug.Log("Création pion blue");
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            pion.CreationPion(pos, Globales.YELLOW_COLOR);
+            indicePion++;
+            Debug.Log("Création pion blue");
+        }
+
+        if (Input.GetKeyDown(KeyCode.P))
+        {
+            pion.CreationPion(pos, Globales.PURPLE_COLOR);
+            indicePion++;
+            Debug.Log("Création pion blue");
+        }
+
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            pion.CreationPion(pos, Globales.CYAN_COLOR);
+            indicePion++;
+            Debug.Log("Création pion blue");
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            pion.CreationPion(pos, Globales.GREEN_COLOR);
+            indicePion++;
+            Debug.Log("Création pion blue");
+        }
+
+
     }
 
     void init_partie()
     {
-        // Code secret
-        //Random alea = new Random();
-        //int[] tab = new int[5];
-
-        Debug.Log("ICI");
-
         int[] couleurs = new int[Globales.NB_PION_LIGNE];
-        string chaine="";
+        //string chaine="";
 
         // Choix des couleurs
         for(int i= 0; i< couleurs.Length; i++)
         {
             couleurs[i] = Random.Range(1, 6);
-            chaine += ("i: " + i.ToString() + ": " + couleurs[i].ToString()) ;
+            //chaine += ("i: " + i.ToString() + ": " + couleurs[i].ToString()) ;
         }
-        // O
-        Debug.Log("Chaine: " + chaine);
+        //Debug.Log("Chaine: " + chaine);
 
         code.GenereCode(couleurs);
 

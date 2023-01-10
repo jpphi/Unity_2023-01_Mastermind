@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PionMarqueCode : MonoBehaviour
 {
-    [SerializeField] protected Material[] tableau_couleur= new Material[8];
+    //[SerializeField] protected Material[] tableau_couleur= new Material[8];
     //[SerializeField] protected GameObject[] forme = new GameObject[3];
 
 

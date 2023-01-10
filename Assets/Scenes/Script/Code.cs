@@ -4,7 +4,7 @@ public class Code : PionMarqueCode
 {
     [SerializeField] protected GameObject forme;
     [SerializeField] protected GameObject coffre;
-    //[SerializeField] protected Material[] tableau_couleur = new Material[6];
+    [SerializeField] protected Material[] tableau_couleur= new Material[6];
 
     private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
 
@@ -13,7 +13,7 @@ public class Code : PionMarqueCode
 
         Quaternion rot = new Quaternion(0, 0, 0, 0);
 
-        Debug.Log("LA !!!");
+        //Debug.Log("LA !!!");
 
         //Material m_Material;
 
@@ -28,17 +28,6 @@ public class Code : PionMarqueCode
 
 
         }
-
-
-
-
-        //m_Material = pion.GetComponent<Renderer>().material;
-
-        //Debug.Log("Position : " + pos);
-        //balle.GetComponent<Rigidbody>().velocity = ProjectilePosition.transform.up * force;
-
-        //    public Material[] tabMaterial;
-        //public int index;
 
     }
 
