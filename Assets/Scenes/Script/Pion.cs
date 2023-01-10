@@ -9,7 +9,7 @@ public class Pion : PionMarqueCode
 
     Quaternion rot = new Quaternion(0, 0, 0, 0);
 
-    public void CreationPion(Vector3 pos, int couleur)
+    public GameObject CreationPion(Vector3 pos, int couleur)
     {
 
         pion = Instantiate<GameObject>(forme, pos, rot);
@@ -17,6 +17,8 @@ public class Pion : PionMarqueCode
         Debug.Log("Dans créationPion");
         //pion = Instantiate<GameObject>(forme, pos, rot);
         //pion.GetComponent<Renderer>().material = tableau_couleur[couleur];
+
+        return pion;
     }
 
 

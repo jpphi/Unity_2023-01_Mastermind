@@ -9,12 +9,11 @@ public class GestionPartie : MonoBehaviour
     [SerializeField] protected Code code;
     [SerializeField] protected Pion pion;
 
+    private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
+
     int indicePion;
     Vector3 pos;
 
-    //private Code code;
-
-    // Start is called before the first frame update
     void Start()
     {
 
@@ -33,46 +32,51 @@ public class GestionPartie : MonoBehaviour
         {
             code.Triche();
         }
-        if (Input.GetKeyDown(KeyCode.R))
+        else if (Input.GetKeyDown(KeyCode.R))
         {
-            pion.CreationPion(pos, Globales.RED_COLOR);
+            pions[indicePion] = pion.CreationPion(pos, Globales.RED_COLOR);
             indicePion++;
             Debug.Log("Création pion red");
         }
 
-        if (Input.GetKeyDown(KeyCode.B))
+        else if (Input.GetKeyDown(KeyCode.B))
         {
-            pion.CreationPion(pos, Globales.BLUE_COLOR);
+            pions[indicePion] = pion.CreationPion(pos, Globales.BLUE_COLOR);
             indicePion++;
             Debug.Log("Création pion blue");
         }
 
-        if (Input.GetKeyDown(KeyCode.Y))
+        else if (Input.GetKeyDown(KeyCode.Y))
         {
-            pion.CreationPion(pos, Globales.YELLOW_COLOR);
+            pions[indicePion] = pion.CreationPion(pos, Globales.YELLOW_COLOR);
             indicePion++;
-            Debug.Log("Création pion blue");
+            Debug.Log("Création pion yellow");
         }
 
-        if (Input.GetKeyDown(KeyCode.P))
+        else if (Input.GetKeyDown(KeyCode.P))
         {
-            pion.CreationPion(pos, Globales.PURPLE_COLOR);
+            pions[indicePion] = pion.CreationPion(pos, Globales.PURPLE_COLOR);
             indicePion++;
-            Debug.Log("Création pion blue");
+            Debug.Log("Création pion purple");
         }
 
-        if (Input.GetKeyDown(KeyCode.C))
+        else if (Input.GetKeyDown(KeyCode.C))
         {
-            pion.CreationPion(pos, Globales.CYAN_COLOR);
+            pions[indicePion] = pion.CreationPion(pos, Globales.CYAN_COLOR);
             indicePion++;
-            Debug.Log("Création pion blue");
+            Debug.Log("Création pion cyan");
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
+        else if (Input.GetKeyDown(KeyCode.G))
         {
-            pion.CreationPion(pos, Globales.GREEN_COLOR);
+            pions[indicePion] = pion.CreationPion(pos, Globales.GREEN_COLOR);
             indicePion++;
-            Debug.Log("Création pion blue");
+            Debug.Log("Création pion green");
+        }
+
+        if(indicePion>= Globales.NB_PION_LIGNE)
+        {
+            indicePion = 0;
         }
 
 
