@@ -64,35 +64,24 @@ public class GestionPartie : MonoBehaviour
             ligneComplete = ligne.Ajoute_Pion_Ligne(Globales.GREEN_COLOR);
         }
 
-        //if(indicePion>= Globales.NB_PION_LIGNE)
-        //{
-        //    indicePion = 0;
-        //}
-
-        Debug.Log("Booleen ligneComplete" + ligneComplete);
-
+        //Debug.Log("Booleen ligneComplete" + ligneComplete);
 
     }
 
     private void init_partie()
     {
-        //string chaine="";
 
-        // Choix des couleurs
-        for(int i= 0; i< CodeCouleur.Length; i++)
+        for(int i= 0; i< Globales.NB_PION_LIGNE; i++)
         {
             CodeCouleur[i] = Random.Range(1, 6);
-            //chaine += ("i: " + i.ToString() + ": " + couleurs[i].ToString()) ;
         }
-        //Debug.Log("Chaine: " + chaine);
-
         code.GenereCode(CodeCouleur);
 
     }
 
-    public void ValidationProposition()
+    private void ValidationProposition()
     {
-        Debug.Log("<Fonction ValidationProposition> Validation : " + ligneComplete);
+        //Debug.Log("<Fonction ValidationProposition> Validation : " + ligneComplete);
 
         if(ligneComplete)
         {

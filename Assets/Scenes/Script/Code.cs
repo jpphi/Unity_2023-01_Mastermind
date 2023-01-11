@@ -14,10 +14,6 @@ public class Code : PionMarqueCode
 
         Quaternion rot = new Quaternion(0, 0, 0, 0);
 
-        //Debug.Log("LA !!!");
-
-        //Material m_Material;
-
         for(int i = 0; i< couleurs.Length; i++)
         {
             Vector3 offset = new Vector3(-2*i + (int)(Globales.NB_PION_LIGNE/2)-1, 0, 0);
@@ -29,9 +25,6 @@ public class Code : PionMarqueCode
 
             // FAIRE COPIE TABLEAU EN C#
             tableau_couleur_code[i]= couleurs[i];
-
-
-
         }
 
     }
@@ -41,9 +34,7 @@ public class Code : PionMarqueCode
         Color color = coffre.GetComponent<Renderer>().material.color;
 
         color.a = 0;
-
         coffre.GetComponent<Renderer>().material.color = color;
-        //Debug.Log("Couleur: " + color);
     }
 
 }

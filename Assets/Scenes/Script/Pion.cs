@@ -14,9 +14,7 @@ public class Pion : PionMarqueCode
 
         pionpion = Instantiate<GameObject>(forme, pos, rot);
         pionpion.GetComponent<Renderer>().material = tableau_couleur[couleur];
-        Debug.Log("Dans créationPion");
-        //pion = Instantiate<GameObject>(forme, pos, rot);
-        //pion.GetComponent<Renderer>().material = tableau_couleur[couleur];
+        Debug.Log("<Pion.CreationPion> position: " + pos + " Couleur : " + couleur);
 
         return pionpion;
     }

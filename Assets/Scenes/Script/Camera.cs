@@ -5,7 +5,7 @@ using UnityEngine;
 public class Camera : MonoBehaviour
 {
     private float speed = 40f;
-    private Vector3 direction = Vector3.forward;
+    //private Vector3 direction = Vector3.forward;
 
     // Start is called before the first frame update
     void Start()

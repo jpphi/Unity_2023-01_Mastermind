@@ -9,12 +9,14 @@ public class Ligne : Pion
     [SerializeField] protected Marque marque;
     [SerializeField] private GameObject plateau;
 
-    private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
+    private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE * Globales.NB_LIGNE_MAX];
     private int[] TabCouleurPions = new int[Globales.NB_PION_LIGNE];
     private int indicePion = 0, nombreElementDansLigne = 0;
 
+    private int LigneEnCours = 0;
 
-    private GameObject[] marques = new GameObject[Globales.NB_PION_LIGNE];
+
+    private GameObject[] marques = new GameObject[Globales.NB_PION_LIGNE * Globales.NB_LIGNE_MAX];
     private int[] TabReponse= new int[Globales.NB_PION_LIGNE];
 
     private Vector3 pos= new Vector3(0,5,0);
@@ -29,16 +31,17 @@ public class Ligne : Pion
 // Start is called before the first frame update
     public bool Ajoute_Pion_Ligne(int couleur)
     {
-        pos = new Vector3(-2 * indicePion, 5, 0);
+
         if (nombreElementDansLigne== Globales.NB_PION_LIGNE)
         { // La ligne est complète
-            if(indicePion== Globales.NB_PION_LIGNE) { indicePion = 0; }
+            if(indicePion== Globales.NB_PION_LIGNE) indicePion = 0;
 
             // Detruire le pion avant d'en créer un nouveau
-            Destroy(pions[indicePion]);
+            Destroy(pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE]);
 
             //pos = new Vector3(-2 * indicePion, 5, 0);
-            pions[indicePion] = pion.CreationPion(pos, couleur);
+            pos = new Vector3(-2 * indicePion, 5, 0);
+            pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE] = pion.CreationPion(pos, couleur);
             TabCouleurPions[indicePion] = couleur;
 
             //Debug.Log("4EL ELSE Dans Ligne création pion couleur: " + couleur);
@@ -49,9 +52,9 @@ public class Ligne : Pion
         }
         else
         {
-            //pos = new Vector3(-2 * indicePion, 5, 0);
+            pos = new Vector3(-2 * indicePion, 5, 0);
 
-            pions[indicePion] = pion.CreationPion(pos, couleur);
+            pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE] = pion.CreationPion(pos, couleur);
             TabCouleurPions[indicePion] = couleur;
             //Debug.Log("Dans Ligne création pion couleur: " + couleur);
             //Debug.Log("L'indice est: " + indicePion + " la position est :" + pos);
@@ -59,7 +62,6 @@ public class Ligne : Pion
             indicePion++;
             nombreElementDansLigne++;
         }
-
 
         return (nombreElementDansLigne== Globales.NB_PION_LIGNE);
     }
@@ -70,14 +72,14 @@ public class Ligne : Pion
         int[] tcp = new int[Globales.NB_PION_LIGNE];
         int[] tcc = new int[Globales.NB_PION_LIGNE];
 
-        Debug.Log("< Fonction CheckResult > " + transform.position);
+        //Debug.Log("< Fonction CheckResult > " + transform.position);
 
         // POSER LA LIGNE AVEC LES MARQUES
 
         // On pose la ligne
         for(int i=0; i<Globales.NB_PION_LIGNE; i++)
         {
-            pions[i].transform.position =  plateauPosition + new Vector3(9 - 2 * i, 1, profondeur );
+            pions[i + LigneEnCours * Globales.NB_PION_LIGNE].transform.position =  plateauPosition + new Vector3(9 - 2 * i, 1, profondeur );
         }
 
         // Initialisation des tableaux
@@ -95,6 +97,7 @@ public class Ligne : Pion
                 tcp[i] = -2; // Le cas est traitée, on écrase la valeur dans le code
             }
         }
+        // On a déterminée les marque noires, on détermine les marques blanches
         for (int i = 0; i < Globales.NB_PION_LIGNE; i++)
         { 
             for(int j= 0; j< Globales.NB_PION_LIGNE;j++)
@@ -115,13 +118,16 @@ public class Ligne : Pion
         {
             pos = plateauPosition + new Vector3(-9 + 2 * u, 1, profondeur); // new Vector3(2 * indicePion, 5, 0);
             marques[u] = marque.CreationMarque(pos, TabReponse[u]);
-            Debug.Log("<Ligne.CheckResult> Dans le for, élément de TabReponse: " + TabReponse[u]);
+            //Debug.Log("<Ligne.CheckResult> Dans le for, élément de TabReponse: " + TabReponse[u]);
         }
 
         //Debug.Log("");
 
         // On décale pour la ligne suivante
         profondeur += 2;
+
+        // On incrémente le nombre de ligne en cours
+        LigneEnCours++;
     }
 
     // Update is called once per frame

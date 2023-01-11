@@ -6,6 +6,7 @@ public class Globales //: MonoBehaviour
 {
 
     public static int NB_PION_LIGNE = 4;
+    public static int NB_LIGNE_MAX = 12;
 
     public static int BLUE_COLOR = 0;
     public static int CYAN_COLOR = 1;
