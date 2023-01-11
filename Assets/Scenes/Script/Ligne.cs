@@ -67,6 +67,9 @@ public class Ligne : Pion
     public void CheckResult(int[] TabCouleurCode)
     {
         int k = 0;
+        int[] tcp = new int[Globales.NB_PION_LIGNE];
+        int[] tcc = new int[Globales.NB_PION_LIGNE];
+
         Debug.Log("< Fonction CheckResult > " + transform.position);
 
         // POSER LA LIGNE AVEC LES MARQUES
@@ -79,22 +82,24 @@ public class Ligne : Pion
 
         // On détermine les marques en comparant la proposition au code
 
-        for (int i = 0; (i < Globales.NB_PION_LIGNE) && (TabReponse[k] != -1); i++); // Init tableau
-
-        for(int i=0; i < Globales.NB_PION_LIGNE;i++)
+        for (int i = 0; i < Globales.NB_PION_LIGNE; TabReponse[i] = -1, i++) ; // Init tableau
+        for (int i = 0; i < Globales.NB_PION_LIGNE; tcp[i]= TabCouleurPions[i], tcc[i]= TabCouleurCode[i], i++); // copie des tableaux
+        for (int i=0; i < Globales.NB_PION_LIGNE;i++)
         {
-            if (TabCouleurPions[i] == TabCouleurCode[i])
+            if (tcp[i] == tcc[i])
             { // La couleur est-elle bien placé ? 
                 TabReponse[k++]= Globales.BLACK_COLOR;
+                tcc[i] = -1; // Le cas est traitée, on écrase la valeur dans le code
             }
             else
             { // La couleur n'est pas bien placé, mais existe t'elle dans le code
                 for(int j= 0; j< Globales.NB_PION_LIGNE;j++)
                 {
-                    if (TabCouleurPions[i] == TabCouleurCode[j])
+                    if (tcp[i] == tcc[j])
                     { // Si on trouve une couleur mal placé on le note et on sort de la boucle
 
                         TabReponse[k++] = Globales.WHITE_COLOR;
+                        tcc[j] = -1; // Le cas est traitée, on écrase la valeur dans le code
                         break;
                     }
                 }

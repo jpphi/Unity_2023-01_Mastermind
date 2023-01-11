@@ -20,7 +20,7 @@ public class Code : PionMarqueCode
 
         for(int i = 0; i< couleurs.Length; i++)
         {
-            Vector3 offset = new Vector3(2*i - (int)(Globales.NB_PION_LIGNE/2)-1, 0, 0);
+            Vector3 offset = new Vector3(-2*i + (int)(Globales.NB_PION_LIGNE/2)-1, 0, 0);
 
             Vector3 pos = coffre.transform.position + offset;
 
