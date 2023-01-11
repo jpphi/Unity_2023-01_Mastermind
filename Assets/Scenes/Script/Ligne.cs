@@ -29,14 +29,15 @@ public class Ligne : Pion
 // Start is called before the first frame update
     public bool Ajoute_Pion_Ligne(int couleur)
     {
-        if(nombreElementDansLigne== Globales.NB_PION_LIGNE)
+        pos = new Vector3(-2 * indicePion, 5, 0);
+        if (nombreElementDansLigne== Globales.NB_PION_LIGNE)
         { // La ligne est complète
             if(indicePion== Globales.NB_PION_LIGNE) { indicePion = 0; }
 
             // Detruire le pion avant d'en créer un nouveau
             Destroy(pions[indicePion]);
 
-            pos = new Vector3(2 * indicePion, 5, 0);
+            //pos = new Vector3(-2 * indicePion, 5, 0);
             pions[indicePion] = pion.CreationPion(pos, couleur);
             TabCouleurPions[indicePion] = couleur;
 
@@ -48,7 +49,7 @@ public class Ligne : Pion
         }
         else
         {
-            pos = new Vector3(2 * indicePion, 5, 0);
+            //pos = new Vector3(-2 * indicePion, 5, 0);
 
             pions[indicePion] = pion.CreationPion(pos, couleur);
             TabCouleurPions[indicePion] = couleur;
@@ -106,6 +107,7 @@ public class Ligne : Pion
         {
             pos = plateauPosition + new Vector3(-9 + 2 * u, 1, profondeur); // new Vector3(2 * indicePion, 5, 0);
             marques[u] = marque.CreationMarque(pos, TabReponse[u]);
+            Debug.Log("<Ligne.CheckResult> Dans le for, élément de TabReponse: " + TabReponse[u]);
         }
 
         //Debug.Log("");
