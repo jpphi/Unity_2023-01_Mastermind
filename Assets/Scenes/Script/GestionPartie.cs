@@ -12,9 +12,11 @@ public class GestionPartie : MonoBehaviour
 
     //private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
 
-    int indicePion;
+    private int indicePion;
     //Vector3 pos;
     bool ligneComplete;
+    private int[] CodeCouleur = new int[Globales.NB_PION_LIGNE];
+
 
     void Start()
     {
@@ -74,24 +76,29 @@ public class GestionPartie : MonoBehaviour
 
     private void init_partie()
     {
-        int[] couleurs = new int[Globales.NB_PION_LIGNE];
         //string chaine="";
 
         // Choix des couleurs
-        for(int i= 0; i< couleurs.Length; i++)
+        for(int i= 0; i< CodeCouleur.Length; i++)
         {
-            couleurs[i] = Random.Range(1, 6);
+            CodeCouleur[i] = Random.Range(1, 6);
             //chaine += ("i: " + i.ToString() + ": " + couleurs[i].ToString()) ;
         }
         //Debug.Log("Chaine: " + chaine);
 
-        code.GenereCode(couleurs);
+        code.GenereCode(CodeCouleur);
 
     }
 
     public void ValidationProposition()
     {
-        Debug.Log("YESSSSSSSSSSSSSSS !");
+        Debug.Log("<Fonction ValidationProposition> Validation : " + ligneComplete);
+
+        if(ligneComplete)
+        {
+            ligneComplete= false;
+            ligne.CheckResult(CodeCouleur);
+        }
     }
 
 }

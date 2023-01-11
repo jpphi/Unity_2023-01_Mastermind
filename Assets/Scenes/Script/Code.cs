@@ -43,7 +43,7 @@ public class Code : PionMarqueCode
         color.a = 0;
 
         coffre.GetComponent<Renderer>().material.color = color;
-        Debug.Log("Couleur: " + color);
+        //Debug.Log("Couleur: " + color);
     }
 
 }
