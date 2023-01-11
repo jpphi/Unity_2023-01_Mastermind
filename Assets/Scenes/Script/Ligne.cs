@@ -14,7 +14,7 @@ public class Ligne : Pion
 
 
     // Start is called before the first frame update
-    public int Ajoute_Pion_Ligne(int couleur)
+    public bool Ajoute_Pion_Ligne(int couleur)
     {
         if(nombreElementDansLigne== Globales.NB_PION_LIGNE)
         { // La ligne est complète
@@ -45,7 +45,7 @@ public class Ligne : Pion
         }
 
 
-        return 0;
+        return (nombreElementDansLigne== Globales.NB_PION_LIGNE);
     }
 
     // Update is called once per frame

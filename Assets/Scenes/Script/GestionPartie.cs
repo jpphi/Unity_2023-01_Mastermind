@@ -13,12 +13,14 @@ public class GestionPartie : MonoBehaviour
     //private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
 
     int indicePion;
-    Vector3 pos;
+    //Vector3 pos;
+    bool ligneComplete;
 
     void Start()
     {
         // Initialisation de La partie
         init_partie();
+        ligneComplete = false;
 
     }
             
@@ -32,38 +34,40 @@ public class GestionPartie : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            ligne.Ajoute_Pion_Ligne(Globales.RED_COLOR);
+            ligneComplete= ligne.Ajoute_Pion_Ligne(Globales.RED_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.B))
         {
-            ligne.Ajoute_Pion_Ligne(Globales.BLUE_COLOR);
+            ligneComplete = ligne.Ajoute_Pion_Ligne(Globales.BLUE_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.Y))
         {
-            ligne.Ajoute_Pion_Ligne(Globales.YELLOW_COLOR);
+            ligneComplete = ligne.Ajoute_Pion_Ligne(Globales.YELLOW_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.P))
         {
-            ligne.Ajoute_Pion_Ligne(Globales.PURPLE_COLOR);
+            ligneComplete = ligne.Ajoute_Pion_Ligne(Globales.PURPLE_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.C))
         {
-            ligne.Ajoute_Pion_Ligne(Globales.CYAN_COLOR);
+            ligneComplete = ligne.Ajoute_Pion_Ligne(Globales.CYAN_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.G))
         {
-            ligne.Ajoute_Pion_Ligne(Globales.GREEN_COLOR);
-         }
+            ligneComplete = ligne.Ajoute_Pion_Ligne(Globales.GREEN_COLOR);
+        }
 
         //if(indicePion>= Globales.NB_PION_LIGNE)
         //{
         //    indicePion = 0;
         //}
+
+        Debug.Log("Booleen ligneComplete" + ligneComplete);
 
 
     }
