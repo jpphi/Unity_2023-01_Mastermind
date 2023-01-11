@@ -7,6 +7,7 @@ public class Code : PionMarqueCode
     [SerializeField] protected Material[] tableau_couleur= new Material[6];
 
     private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
+    private int[] tableau_couleur_code= new int[Globales.NB_PION_LIGNE];
 
     public void GenereCode(int[] couleurs)
     {
@@ -25,6 +26,10 @@ public class Code : PionMarqueCode
 
             pions[i] = Instantiate<GameObject>(forme, pos, rot);
             pions[i].GetComponent<Renderer>().material = tableau_couleur[couleurs[i]];
+
+            // FAIRE COPIE TABLEAU EN C#
+            tableau_couleur_code[i]= couleurs[i];
+
 
 
         }

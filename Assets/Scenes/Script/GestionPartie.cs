@@ -7,26 +7,24 @@ public class GestionPartie : MonoBehaviour
     [SerializeField] protected GameObject boule;
     [SerializeField] protected GameObject marque;
     [SerializeField] protected Code code;
-    [SerializeField] protected Pion pion;
+    //[SerializeField] protected Pion pion;
+    [SerializeField] protected Ligne ligne;
 
-    private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
+    //private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
 
     int indicePion;
     Vector3 pos;
 
     void Start()
     {
-
         // Initialisation de La partie
         init_partie();
-
-        indicePion = 0;
 
     }
             
     void Update()
     {
-        pos = new Vector3(2 * indicePion, 5, 0);
+        //pos = new Vector3(2 * indicePion, 5, 0);
 
         if (Input.GetKey(KeyCode.T))
         {
@@ -34,50 +32,38 @@ public class GestionPartie : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {
-            pions[indicePion] = pion.CreationPion(pos, Globales.RED_COLOR);
-            indicePion++;
-            Debug.Log("Création pion red");
+            ligne.Ajoute_Pion_Ligne(Globales.RED_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.B))
         {
-            pions[indicePion] = pion.CreationPion(pos, Globales.BLUE_COLOR);
-            indicePion++;
-            Debug.Log("Création pion blue");
+            ligne.Ajoute_Pion_Ligne(Globales.BLUE_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.Y))
         {
-            pions[indicePion] = pion.CreationPion(pos, Globales.YELLOW_COLOR);
-            indicePion++;
-            Debug.Log("Création pion yellow");
+            ligne.Ajoute_Pion_Ligne(Globales.YELLOW_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.P))
         {
-            pions[indicePion] = pion.CreationPion(pos, Globales.PURPLE_COLOR);
-            indicePion++;
-            Debug.Log("Création pion purple");
+            ligne.Ajoute_Pion_Ligne(Globales.PURPLE_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.C))
         {
-            pions[indicePion] = pion.CreationPion(pos, Globales.CYAN_COLOR);
-            indicePion++;
-            Debug.Log("Création pion cyan");
+            ligne.Ajoute_Pion_Ligne(Globales.CYAN_COLOR);
         }
 
         else if (Input.GetKeyDown(KeyCode.G))
         {
-            pions[indicePion] = pion.CreationPion(pos, Globales.GREEN_COLOR);
-            indicePion++;
-            Debug.Log("Création pion green");
-        }
+            ligne.Ajoute_Pion_Ligne(Globales.GREEN_COLOR);
+         }
 
-        if(indicePion>= Globales.NB_PION_LIGNE)
-        {
-            indicePion = 0;
-        }
+        //if(indicePion>= Globales.NB_PION_LIGNE)
+        //{
+        //    indicePion = 0;
+        //}
 
 
     }
