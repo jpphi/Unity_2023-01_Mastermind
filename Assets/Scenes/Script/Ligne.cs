@@ -80,30 +80,33 @@ public class Ligne : Pion
             pions[i].transform.position =  plateauPosition + new Vector3(9 - 2 * i, 1, profondeur );
         }
 
-        // On détermine les marques en comparant la proposition au code
-
+        // Initialisation des tableaux
         for (int i = 0; i < Globales.NB_PION_LIGNE; TabReponse[i] = -1, i++) ; // Init tableau
         for (int i = 0; i < Globales.NB_PION_LIGNE; tcp[i]= TabCouleurPions[i], tcc[i]= TabCouleurCode[i], i++); // copie des tableaux
-        for (int i=0; i < Globales.NB_PION_LIGNE;i++)
+
+        // On détermine les marques noires en comparant la proposition au code
+        // Les boucles for imbriquée ne permette pas de réglé le problème 11XX 0111 
+        for (int i = 0; i < Globales.NB_PION_LIGNE; i++)
         {
             if (tcp[i] == tcc[i])
             { // La couleur est-elle bien placé ? 
-                TabReponse[k++]= Globales.BLACK_COLOR;
+                TabReponse[k++] = Globales.BLACK_COLOR;
                 tcc[i] = -1; // Le cas est traitée, on écrase la valeur dans le code
+                tcp[i] = -2; // Le cas est traitée, on écrase la valeur dans le code
             }
-            else
-            { // La couleur n'est pas bien placé, mais existe t'elle dans le code
-                for(int j= 0; j< Globales.NB_PION_LIGNE;j++)
-                {
-                    if (tcp[i] == tcc[j])
-                    { // Si on trouve une couleur mal placé on le note et on sort de la boucle
+        }
+        for (int i = 0; i < Globales.NB_PION_LIGNE; i++)
+        { 
+            for(int j= 0; j< Globales.NB_PION_LIGNE;j++)
+            {
+                if (tcp[i] == tcc[j])
+                { // Si on trouve une couleur mal placé on le note et on sort de la boucle
 
-                        TabReponse[k++] = Globales.WHITE_COLOR;
-                        tcc[j] = -1; // Le cas est traitée, on écrase la valeur dans le code
-                        break;
-                    }
+                    TabReponse[k++] = Globales.WHITE_COLOR;
+                    tcc[j] = -1; // Le cas est traitée, on écrase la valeur dans le code
+                    tcp[i] = -2; // Le cas est traitée, on écrase la valeur dans le code
+                    break;
                 }
-
             }
         }
 
