@@ -78,7 +78,7 @@ public class Ligne : Pion
 
         // On détermine les marques en comparant la proposition au code
 
-        for (int i = 0; i < Globales.NB_PION_LIGNE; i++,TabReponse[k] = -1); // Init tableau
+        for (int i = 0; (i < Globales.NB_PION_LIGNE) && (TabReponse[k] != -1); i++); // Init tableau
 
         for(int i=0; i < Globales.NB_PION_LIGNE;i++)
         {
@@ -99,15 +99,13 @@ public class Ligne : Pion
                 }
 
             }
-
         }
 
-
         // Affichons le tableau des marques
-        for (int i = 0; (i < Globales.NB_PION_LIGNE) && (TabReponse[i] != -1); k++)
+        for (int u = 0; (u < Globales.NB_PION_LIGNE) && (TabReponse[u] != -1); u++)
         {
-            pos = new Vector3(2 * indicePion, 5, 0);
-            marques[k] = marque.CreationMarque(pos, TabReponse[i]);
+            pos = plateauPosition + new Vector3(-9 + 2 * u, 1, profondeur); // new Vector3(2 * indicePion, 5, 0);
+            marques[u] = marque.CreationMarque(pos, TabReponse[u]);
         }
 
         //Debug.Log("");
