@@ -72,7 +72,7 @@ public class GestionPartie : MonoBehaviour
 
     }
 
-    void init_partie()
+    private void init_partie()
     {
         int[] couleurs = new int[Globales.NB_PION_LIGNE];
         //string chaine="";
@@ -89,5 +89,9 @@ public class GestionPartie : MonoBehaviour
 
     }
 
+    public void ValidationProposition()
+    {
+        Debug.Log("YESSSSSSSSSSSSSSS !");
+    }
 
 }
