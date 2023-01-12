@@ -28,9 +28,12 @@ public class Ligne : Pion
         plateauPosition = plateau.transform.position;
     }
 
-// Start is called before the first frame update
     public bool Ajoute_Pion_Ligne(int couleur)
     {
+        if (LigneEnCours >= Globales.NB_LIGNE_MAX)
+        {
+            return false;
+        }
 
         if (nombreElementDansLigne== Globales.NB_PION_LIGNE)
         { // La ligne est complète
@@ -79,7 +82,7 @@ public class Ligne : Pion
         // On pose la ligne
         for(int i=0; i<Globales.NB_PION_LIGNE; i++)
         {
-            pions[i + LigneEnCours * Globales.NB_PION_LIGNE].transform.position =  plateauPosition + new Vector3(9 - 2 * i, 1, profondeur );
+            pions[i + LigneEnCours * Globales.NB_PION_LIGNE].transform.position =  plateauPosition + new Vector3(9 - 2 * i, 1f + (float)(LigneEnCours)/3, profondeur );
         }
 
         // Initialisation des tableaux
@@ -87,19 +90,21 @@ public class Ligne : Pion
         for (int i = 0; i < Globales.NB_PION_LIGNE; tcp[i]= TabCouleurPions[i], tcc[i]= TabCouleurCode[i], i++); // copie des tableaux
 
         // On détermine les marques noires en comparant la proposition au code
-        // Les boucles for imbriquée ne permette pas de réglé le problème 11XX 0111 
+        // Les boucles for imbriquée ne permette pas de réglé le problème généré par les combinaisons
+        //   code / proposition 11XX X11X 
         for (int i = 0; i < Globales.NB_PION_LIGNE; i++)
         {
             if (tcp[i] == tcc[i])
             { // La couleur est-elle bien placé ? 
                 TabReponse[k++] = Globales.BLACK_COLOR;
                 tcc[i] = -1; // Le cas est traitée, on écrase la valeur dans le code
-                tcp[i] = -2; // Le cas est traitée, on écrase la valeur dans le code
+                tcp[i] = -2; // Le cas est traitée, on écrase la valeur dans la proposition faite
             }
         }
-        // On a déterminée les marque noires, on détermine les marques blanches
+        // On a déterminée les marques noires, on détermine les marques blanches
         for (int i = 0; i < Globales.NB_PION_LIGNE; i++)
-        { 
+        {
+            if (tcp[i] == -2) continue;
             for(int j= 0; j< Globales.NB_PION_LIGNE;j++)
             {
                 if (tcp[i] == tcc[j])
@@ -107,7 +112,7 @@ public class Ligne : Pion
 
                     TabReponse[k++] = Globales.WHITE_COLOR;
                     tcc[j] = -1; // Le cas est traitée, on écrase la valeur dans le code
-                    tcp[i] = -2; // Le cas est traitée, on écrase la valeur dans le code
+                    tcp[i] = -2; // Le cas est traitée, on écrase la valeur dans la proposition faite
                     break;
                 }
             }
@@ -126,8 +131,8 @@ public class Ligne : Pion
         // On décale pour la ligne suivante
         profondeur += 2;
 
-        // On incrémente le nombre de ligne en cours
         LigneEnCours++;
+
     }
 
     // Update is called once per frame
