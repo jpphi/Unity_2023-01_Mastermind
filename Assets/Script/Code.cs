@@ -4,7 +4,8 @@ public class Code : PionMarqueCode
 {
     [SerializeField] protected GameObject forme;
     [SerializeField] protected GameObject coffre;
-    [SerializeField] protected Material[] tableau_couleur= new Material[6];
+    [SerializeField] protected GameObject plat;
+    [SerializeField] protected Material[] tableau_couleur = new Material[6];
 
     private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
     private int[] tableau_couleur_code= new int[Globales.NB_PION_LIGNE];
@@ -21,12 +22,12 @@ public class Code : PionMarqueCode
             Vector3 pos = coffre.transform.position + offset;
 
             pions[i] = Instantiate<GameObject>(forme, pos, rot);
+            //pions[i] = Instantiate<GameObject>(forme, plat);
             pions[i].GetComponent<Renderer>().material = tableau_couleur[couleurs[i]];
 
             // FAIRE COPIE TABLEAU EN C#
             tableau_couleur_code[i]= couleurs[i];
         }
-
     }
 
     public void Triche()

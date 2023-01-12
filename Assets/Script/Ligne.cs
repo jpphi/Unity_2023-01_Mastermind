@@ -26,6 +26,8 @@ public class Ligne : Pion
     private void Start()
     {
         plateauPosition = plateau.transform.position;
+        //plateauPosition =  new Vector3(0,0,0);
+
     }
 
     public bool Ajoute_Pion_Ligne(int couleur)
@@ -89,7 +91,7 @@ public class Ligne : Pion
             y = 1;// 1f + (float)(LigneEnCours) / 3;
             z= 0;
             Vector3 positionPion = plateauPosition + new Vector3(x, y, profondeur);
-            pions[i + LigneEnCours * Globales.NB_PION_LIGNE].transform.position = positionPion;
+            pions[i + LigneEnCours * Globales.NB_PION_LIGNE].transform.localPosition= positionPion;
         }
 
         // Initialisation des tableaux
