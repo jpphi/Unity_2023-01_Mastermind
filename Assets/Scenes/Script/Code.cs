@@ -33,7 +33,8 @@ public class Code : PionMarqueCode
     {
         Color color = coffre.GetComponent<Renderer>().material.color;
 
-        color.a = 0;
+        if (color.a >= 1) color.a = 0;
+        else color.a = 1;
         coffre.GetComponent<Renderer>().material.color = color;
     }
 

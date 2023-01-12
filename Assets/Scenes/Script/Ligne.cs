@@ -30,19 +30,22 @@ public class Ligne : Pion
 
     public bool Ajoute_Pion_Ligne(int couleur)
     {
+        // On ne doit plus pouvoir ajouter de pion lorsque le nombre maximum de coups
+        //  est atteint!
         if (LigneEnCours >= Globales.NB_LIGNE_MAX)
         {
             return false;
         }
 
         if (nombreElementDansLigne== Globales.NB_PION_LIGNE)
-        { // La ligne est complète
-            if(indicePion== Globales.NB_PION_LIGNE) indicePion = 0;
+        { // La ligne est complète !
 
-            // Detruire le pion avant d'en créer un nouveau
+            // L'élément suivant le dernier élément du tableau est l'élément 0 (tableau circulaire)
+            if (indicePion== Globales.NB_PION_LIGNE) indicePion = 0; 
+
+            // Detruire le pion existant avant d'en créer un nouveau
             Destroy(pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE]);
 
-            //pos = new Vector3(-2 * indicePion, 5, 0);
             pos = new Vector3(-2 * indicePion, 5, 0);
             pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE] = pion.CreationPion(pos, couleur);
             TabCouleurPions[indicePion] = couleur;
@@ -51,7 +54,6 @@ public class Ligne : Pion
             //Debug.Log("L'indice est: " + indicePion + " la position est :" + pos);
 
             indicePion++;
-
         }
         else
         {
@@ -72,6 +74,7 @@ public class Ligne : Pion
     public void CheckResult(int[] TabCouleurCode)
     {
         int k = 0;
+        float x, y, z;
         int[] tcp = new int[Globales.NB_PION_LIGNE];
         int[] tcc = new int[Globales.NB_PION_LIGNE];
 
@@ -82,7 +85,11 @@ public class Ligne : Pion
         // On pose la ligne
         for(int i=0; i<Globales.NB_PION_LIGNE; i++)
         {
-            pions[i + LigneEnCours * Globales.NB_PION_LIGNE].transform.position =  plateauPosition + new Vector3(9 - 2 * i, 1f + (float)(LigneEnCours)/3, profondeur );
+            x = 9 - 2 * i;
+            y = 1;// 1f + (float)(LigneEnCours) / 3;
+            z= 0;
+            Vector3 positionPion = plateauPosition + new Vector3(x, y, profondeur);
+            pions[i + LigneEnCours * Globales.NB_PION_LIGNE].transform.position = positionPion;
         }
 
         // Initialisation des tableaux
@@ -121,7 +128,9 @@ public class Ligne : Pion
         // Affichons le tableau des marques
         for (int u = 0; (u < Globales.NB_PION_LIGNE) && (TabReponse[u] != -1); u++)
         {
-            pos = plateauPosition + new Vector3(-9 + 2 * u, 1, profondeur); // new Vector3(2 * indicePion, 5, 0);
+            x = -9 + 2 * u;
+            y = 1;
+            pos = plateauPosition + new Vector3(x, 1, profondeur); // new Vector3(2 * indicePion, 5, 0);
             marques[u] = marque.CreationMarque(pos, TabReponse[u]);
             //Debug.Log("<Ligne.CheckResult> Dans le for, élément de TabReponse: " + TabReponse[u]);
         }

@@ -7,10 +7,7 @@ public class GestionPartie : MonoBehaviour
     [SerializeField] protected GameObject boule;
     [SerializeField] protected GameObject marque;
     [SerializeField] protected Code code;
-    //[SerializeField] protected Pion pion;
     [SerializeField] protected Ligne ligne;
-
-    //private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];
 
     private int indicePion;
     //Vector3 pos;
@@ -28,9 +25,8 @@ public class GestionPartie : MonoBehaviour
             
     void Update()
     {
-        //pos = new Vector3(2 * indicePion, 5, 0);
 
-        if (Input.GetKey(KeyCode.T))
+        if (Input.GetKeyDown(KeyCode.T))
         {
             code.Triche();
         }
@@ -78,8 +74,7 @@ public class GestionPartie : MonoBehaviour
         code.GenereCode(CodeCouleur);
 
     }
-
-    private void ValidationProposition()
+    private void ValidationProposition() // Déclenché par le boutton "Validation du panel"
     {
         //Debug.Log("<Fonction ValidationProposition> Validation : " + ligneComplete);
 
