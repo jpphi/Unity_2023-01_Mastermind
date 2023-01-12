@@ -85,4 +85,12 @@ public class GestionPartie : MonoBehaviour
         }
     }
 
+
+    public void OnAGagne() // Déclenché dans Ligne lorsque 4 marques noires sont donnée 
+    {
+
+        Debug.Log("On a Gagne !!!! " + Globales.SCORE);
+    }
+
+
 }

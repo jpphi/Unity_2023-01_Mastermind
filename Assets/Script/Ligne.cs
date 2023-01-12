@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using static UnityEditor.PlayerSettings;
 
+using UnityEngine.Events;
+
+
 public class Ligne : Pion
 {
     [SerializeField] protected Pion pion;
@@ -22,6 +25,9 @@ public class Ligne : Pion
     private Vector3 pos= new Vector3(0,5,0);
     private int profondeur= Globales.POSITION_LIGNE_BASE_Z;
     private Vector3 plateauPosition;
+
+    public UnityEvent eventGagne;
+
 
     private void Start()
     {
@@ -76,7 +82,7 @@ public class Ligne : Pion
     public void CheckResult(int[] TabCouleurCode)
     {
         int k = 0;
-        float x, y, z;
+        float x, y;
         int[] tcp = new int[Globales.NB_PION_LIGNE];
         int[] tcc = new int[Globales.NB_PION_LIGNE];
 
@@ -89,7 +95,6 @@ public class Ligne : Pion
         {
             x = 9 - 2 * i;
             y = 1;// 1f + (float)(LigneEnCours) / 3;
-            z= 0;
             Vector3 positionPion = plateauPosition + new Vector3(x, y, profondeur);
             pions[i + LigneEnCours * Globales.NB_PION_LIGNE].transform.localPosition= positionPion;
         }
@@ -131,13 +136,22 @@ public class Ligne : Pion
         for (int u = 0; (u < Globales.NB_PION_LIGNE) && (TabReponse[u] != -1); u++)
         {
             x = -9 + 2 * u;
-            y = 1;
             pos = plateauPosition + new Vector3(x, 1, profondeur); // new Vector3(2 * indicePion, 5, 0);
             marques[u] = marque.CreationMarque(pos, TabReponse[u]);
             //Debug.Log("<Ligne.CheckResult> Dans le for, élément de TabReponse: " + TabReponse[u]);
         }
 
-        //Debug.Log("");
+        // As t on gagné
+        int nbMarqueNoire = 0;
+        for (int i= 0; i < Globales.NB_PION_LIGNE;i++)
+        { 
+            if (TabReponse[i] == Globales.BLACK_COLOR) nbMarqueNoire++;
+        }
+        if (nbMarqueNoire >= Globales.NB_PION_LIGNE)
+        {
+            Globales.SCORE = 16;
+            eventGagne.Invoke();
+        }
 
         // On décale pour la ligne suivante
         profondeur += 2;
