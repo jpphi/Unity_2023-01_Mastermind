@@ -1,7 +1,7 @@
 
 using UnityEngine;
 
-public class Marque : PionMarqueCode
+public class Marque : MonoBehaviour 
 {
     [SerializeField] protected GameObject forme;
     [SerializeField] protected GameObject plateauMarque;

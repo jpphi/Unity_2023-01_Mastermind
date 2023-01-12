@@ -1,10 +1,10 @@
 using UnityEngine;
 
-public class Code : PionMarqueCode
+public class Code : MonoBehaviour
 {
     [SerializeField] protected GameObject forme;
     [SerializeField] protected GameObject coffre;
-    [SerializeField] protected GameObject plat;
+    //[SerializeField] protected GameObject plat;
     [SerializeField] protected Material[] tableau_couleur = new Material[6];
 
     private GameObject[] pions = new GameObject[Globales.NB_PION_LIGNE];

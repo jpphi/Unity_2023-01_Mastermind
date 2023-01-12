@@ -61,6 +61,10 @@ public class GestionPartie : MonoBehaviour
             {
                 ligneComplete = ligne.Ajoute_Pion_Ligne(Globales.GREEN_COLOR);
             }
+            else if ( Input.GetKeyDown(KeyCode.Return) && ligneComplete)
+            {
+                ValidationProposition();
+            }
 
             //Debug.Log("Booleen ligneComplete" + ligneComplete);
         }

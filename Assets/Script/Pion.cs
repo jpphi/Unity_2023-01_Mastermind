@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class Pion : PionMarqueCode
+public class Pion : MonoBehaviour
 {
     [SerializeField] protected GameObject forme;
     [SerializeField] protected Material[] tableau_couleur= new Material[6];

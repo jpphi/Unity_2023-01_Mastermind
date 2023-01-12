@@ -54,7 +54,7 @@ public class Ligne : Pion
             // Detruire le pion existant avant d'en créer un nouveau
             Destroy(pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE]);
 
-            pos = new Vector3(-2 * indicePion, 5, 0);
+            pos = new Vector3(-2 * indicePion + 2, 5, 0);
             pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE] = pion.CreationPion(pos, couleur);
             TabCouleurPions[indicePion] = couleur;
 
