@@ -14,13 +14,19 @@ public class GestionPartie : MonoBehaviour
     bool ligneComplete, FinPartie;
     private int[] CodeCouleur = new int[Globales.NB_PION_LIGNE];
 
+    //IA ab = new IA();
 
     void Start()
     {
         // Initialisation de La partie
         init_partie();
         ligneComplete = FinPartie= false;
+        //ab.OnIADecode += test;
+    }
 
+    void test(int a)
+    {
+        Debug.Log("test" + a);
     }
             
     void Update()
