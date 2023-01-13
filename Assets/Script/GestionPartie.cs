@@ -105,5 +105,12 @@ public class GestionPartie : MonoBehaviour
         FinPartie = true;
     }
 
+    public void recup(int a)
+    {
+        Debug.Log("Recup : " + a);
+
+    }
+
+
 
 }

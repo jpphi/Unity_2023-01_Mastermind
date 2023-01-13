@@ -9,13 +9,16 @@ public class IA : MonoBehaviour
  
     public delegate void IADecode(int score); //int score
     public event IADecode OnIADecode;
+    [SerializeField]public GestionPartie gp;
+    //public GestionPartie gp;
 
+    //public GestionPartie gp = new GestionPartie();
 
     private void Start()
     {
         // Initialisation de l'univers des possibles
 
-        OnIADecode += new IADecode(recup);
+        OnIADecode += new IADecode(gp.recup);
 
     }
     public void lancerIA()
@@ -30,11 +33,6 @@ public class IA : MonoBehaviour
 
     }
 
-    public void recup(int a)
-    {
-        Debug.Log("Recup : " + a);
-
-    }
 
 
     private void rechercheCode()
