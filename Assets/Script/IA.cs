@@ -9,8 +9,9 @@ public class IA : MonoBehaviour
  
     public delegate void IADecode(int score); //int score
     public event IADecode OnIADecode;
+    [SerializeField] public Code codeSecret;
+    [SerializeField] public Ligne ligneSecret;
     [SerializeField] public GestionPartie gp;
-    //[SerializeField] public GestionPartie gp;
     //public GestionPartie gp;
 
     //public GestionPartie gp = new GestionPartie();
@@ -33,10 +34,19 @@ public class IA : MonoBehaviour
 
         // 1ère proposition
         for (int i = 0; i < proposition.Length; proposition[i] = i, i++) ;
+        for (int i = 0; i < Globales.NB_PION_LIGNE; Debug.Log("reponse[i]: " + proposition[i]), i++) ;
 
-        while(true)
+        while (true)
         {
-            //reponse= Ligne.compareTableau(proposition, );
+            // L'IA joue !
+            for(int i= 0; i<proposition.Length; i++)
+            {
+                ligneSecret.Ajoute_Pion_Ligne(proposition[i]);
+            }
+            reponse= ligneSecret.CheckResult();
+
+            for (int i = 0; i < Globales.NB_PION_LIGNE; Debug.Log("reponse[i]: " + reponse[i]), i++) ;
+
             break;
         }
 

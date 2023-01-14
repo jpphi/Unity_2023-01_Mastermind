@@ -81,7 +81,7 @@ public class Ligne : Pion
         return (nombreElementDansLigne== Globales.NB_PION_LIGNE);
     }
 
-    public void CheckResult()
+    public int[] CheckResult()
     {
         //int k = 0;
         float x, y;
@@ -134,10 +134,9 @@ public class Ligne : Pion
 
         LigneEnCours++;
 
+        return TabReponse;
+
     }
-
-
-   
 
     // Update is called once per frame
     void Update()
