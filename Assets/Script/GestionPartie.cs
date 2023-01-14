@@ -9,10 +9,10 @@ public class GestionPartie : MonoBehaviour
     [SerializeField] protected Code code;
     [SerializeField] protected Ligne ligne;
 
-    private int indicePion;
+    //private int indicePion;
     //Vector3 pos;
     bool ligneComplete, FinPartie;
-    private int[] CodeCouleur = new int[Globales.NB_PION_LIGNE];
+    //private int[] CodeCouleur = new int[Globales.NB_PION_LIGNE];
 
     //IA ab = new IA();
 
@@ -79,22 +79,20 @@ public class GestionPartie : MonoBehaviour
 
     private void init_partie()
     {
-
-        for(int i= 0; i< Globales.NB_PION_LIGNE; i++)
-        {
-            CodeCouleur[i] = Random.Range(1, 6);
-        }
-        code.GenereCode(CodeCouleur);
-
+        code.GenereCode();
     }
-    private void ValidationProposition() // Déclenché par le boutton "Validation du panel"
+    public void ValidationProposition()
+    /*
+     * Déclenché par le boutton "Validation du panel". Doit être public pour pouvoir être "vu" par la gestion de l'évènement
+     */
     {
         //Debug.Log("<Fonction ValidationProposition> Validation : " + ligneComplete);
 
         if(ligneComplete)
         {
             ligneComplete= false;
-            ligne.CheckResult(CodeCouleur);
+
+            ligne.CheckResult();
         }
     }
 

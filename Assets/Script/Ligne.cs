@@ -8,7 +8,9 @@ using UnityEngine.Events;
 
 public class Ligne : Pion
 {
+
     [SerializeField] protected Pion pion;
+    [SerializeField] protected Code code;
     [SerializeField] protected Marque marque;
     [SerializeField] private GameObject plateau;
 
@@ -20,7 +22,7 @@ public class Ligne : Pion
 
 
     private GameObject[] marques = new GameObject[Globales.NB_PION_LIGNE * Globales.NB_LIGNE_MAX];
-    private int[] TabReponse= new int[Globales.NB_PION_LIGNE];
+    //private int[] TabReponse= new int[Globales.NB_PION_LIGNE];
 
     private Vector3 pos= new Vector3(0,5,0);
     private int profondeur= Globales.POSITION_LIGNE_BASE_Z;
@@ -28,7 +30,7 @@ public class Ligne : Pion
 
     public UnityEvent eventGagne;
 
-
+    /**/
     private void Start()
     {
         plateauPosition = plateau.transform.position;
@@ -79,12 +81,12 @@ public class Ligne : Pion
         return (nombreElementDansLigne== Globales.NB_PION_LIGNE);
     }
 
-    public void CheckResult(int[] TabCouleurCode)
+    public void CheckResult()
     {
         //int k = 0;
         float x, y;
         int[] tcp = new int[Globales.NB_PION_LIGNE];
-        int[] tcc = new int[Globales.NB_PION_LIGNE];
+        int[] TabReponse = new int[Globales.NB_PION_LIGNE];
 
         //Debug.Log("< Fonction CheckResult > " + transform.position);
 
@@ -100,9 +102,11 @@ public class Ligne : Pion
         }
 
         // Initialisation des tableaux
-        for (int i = 0; i < Globales.NB_PION_LIGNE; tcp[i]= TabCouleurPions[i], tcc[i]= TabCouleurCode[i], i++); // copie des tableaux
+        for (int i = 0; i < Globales.NB_PION_LIGNE; tcp[i]= TabCouleurPions[i], i++); // copie des tableaux
 
-        TabReponse = compareTableau(tcp, tcc);
+        TabReponse = code.compareTableau(tcp);
+
+        //for(int i = 0; i < TabReponse[i]; Debug.Log("Retour de compare: " + TabReponse[i]), i++);
 
         // Affichons le tableau des marques
         for (int u = 0; (u < Globales.NB_PION_LIGNE) && (TabReponse[u] != -1); u++)
@@ -133,45 +137,7 @@ public class Ligne : Pion
     }
 
 
-    public int[] compareTableau(int[] proposition, int[] code)
-    {
-        int[] reponse = new int[proposition.Length];
-        int k = 0;
-
-        for (int i = 0; i < Globales.NB_PION_LIGNE; reponse[i] = -1, i++) ; // Init tableau
-
-        // On détermine les marques noires en comparant la proposition au code
-        // Les boucles for imbriquée ne permette pas de réglé le problème généré par les combinaisons
-        //   code / proposition 11XX X11X 
-        for (int i = 0; i < Globales.NB_PION_LIGNE; i++)
-        {
-            if (proposition[i] == code[i])
-            { // La couleur est-elle bien placé ? 
-                reponse[k++] = Globales.BLACK_COLOR;
-                code[i] = -1; // Le cas est traitée, on écrase la valeur dans le code
-                proposition[i] = -2; // Le cas est traitée, on écrase la valeur dans la proposition faite
-            }
-        }
-        // On a déterminée les marques noires, on détermine les marques blanches
-        for (int i = 0; i < Globales.NB_PION_LIGNE; i++)
-        {
-            if (proposition[i] == -2) continue;
-            for (int j = 0; j < Globales.NB_PION_LIGNE; j++)
-            {
-                if (proposition[i] == code[j])
-                { // Si on trouve une couleur mal placé on le note et on sort de la boucle
-
-                    reponse[k++] = Globales.WHITE_COLOR;
-                    code[j] = -1; // Le cas est traitée, on écrase la valeur dans le code
-                    proposition[i] = -2; // Le cas est traitée, on écrase la valeur dans la proposition faite
-                    break;
-                }
-            }
-        }
-
-        return reponse;
-    }
-
+   
 
     // Update is called once per frame
     void Update()

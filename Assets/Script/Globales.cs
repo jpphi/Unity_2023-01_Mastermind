@@ -17,7 +17,7 @@ public class Globales //: MonoBehaviour
     public static int BLACK_COLOR = 0;
     public static int WHITE_COLOR = 1;
 
-    public static int TAILLE_UNIVERS = 1296;
+    public static int NB_COULEURS = 6;
 
     public static int POSITION_LIGNE_BASE_X = 0;
     public static int POSITION_LIGNE_BASE_Y = 5;

@@ -9,7 +9,8 @@ public class IA : MonoBehaviour
  
     public delegate void IADecode(int score); //int score
     public event IADecode OnIADecode;
-    [SerializeField]public GestionPartie gp;
+    [SerializeField] public GestionPartie gp;
+    //[SerializeField] public GestionPartie gp;
     //public GestionPartie gp;
 
     //public GestionPartie gp = new GestionPartie();
@@ -23,8 +24,21 @@ public class IA : MonoBehaviour
     }
     public void lancerIA()
     {
+        int[] proposition = new int[Globales.NB_PION_LIGNE];
+        int[] reponse = new int[Globales.NB_PION_LIGNE];
 
-        Debug.Log("<Decode.lancerIA> ");
+        //int[] propositionInitiale = new int[Globales.NB_PION_LIGNE];
+
+        //Debug.Log("<Decode.lancerIA> ");
+
+        // 1ère proposition
+        for (int i = 0; i < proposition.Length; proposition[i] = i, i++) ;
+
+        while(true)
+        {
+            //reponse= Ligne.compareTableau(proposition, );
+            break;
+        }
 
         OnIADecode.Invoke(51165);
 
