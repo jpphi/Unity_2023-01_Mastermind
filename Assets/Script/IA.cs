@@ -205,22 +205,26 @@ public class IA : MonoBehaviour
 
             else if ((N == 2) && (B == 0))
             {
-                Debug.Log("<IA.LancerIA> : N== 2 && B == 0 : passe numéro " + nbPasse +
-                   " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
                 if (nbValeurTrouve == 0)
                 {   // La couleur existe dans la combinaison et est double
                     nbValeurTrouve = 2;
                     couleurDisponible[numCouleur, 1] = 2;
+                    Debug.Log("<IA.LancerIA> : N== 2 && B == 0 : nb_valeur= 0 passe numéro " + nbPasse +
+                       " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
                 }
                 else if (nbValeurTrouve == 1)
                 {   // Une valeur avait été trouvé, une nouvelle vient d'être trouvé et elle est unique
                     nbValeurTrouve = 2;
                     couleurDisponible[numCouleur, 1] = 1;
+                    Debug.Log("<IA.LancerIA> : N== 2 && B == 0 : nb_valeur= 1 passe numéro " + nbPasse +
+                       " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
 
                 }
                 else // la nouvelle valeur proposé n'est pas dans la combinaison
                 {   // nbValeurTrouve était déjà à 2
                     couleurDisponible[numCouleur, 1] = 0;
+                    Debug.Log("<IA.LancerIA> : N== 2 && B == 0 : nb_valeur= 2 passe numéro " + nbPasse +
+                       " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
                 }
                 numCouleur++;
                 proposition = construitProposition(couleurDisponible);
@@ -243,7 +247,11 @@ public class IA : MonoBehaviour
                     //  SI PERMUTATION DES 2 VALEURS CA DEVRAIT POSITIONNER LES 2 VALEURS A LEUR PLACE
                     nbValeurTrouve = 2;
                     couleurDisponible[numCouleur, 1] = 1;
-                    // ------------------> tableau des places
+                    Debug.Log("<IA.LancerIA> : N== 0 && B == 2 : nbValeurTrouve == 1 passe numéro " + nbPasse +
+                               " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + 
+                               couleurDisponible[numCouleur, 1]);
+
+// ------------------> tableau des places
                 }
                 else if (nbValeurTrouve == 2)
                 {   // Deux valeurs avaient été trouvé et ne sont pas à la bonne place
@@ -252,7 +260,12 @@ public class IA : MonoBehaviour
                     nbValeurTrouve = 2;
                     couleurDisponible[numCouleur, 1] = 0;
 
-                    // ------------------> tableau des places
+                    Debug.Log("<IA.LancerIA> : N== 0 && B == 2 : nbValeurTrouve == 2 passe numéro " + nbPasse +
+                               " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " +
+                               couleurDisponible[numCouleur, 1]);
+
+// ------------------> tableau des places
+                
                 }
                 else // la nouvelle valeur proposé n'est pas dans la combinaison
                 {   // nbValeurTrouve était déjà à 2
@@ -361,6 +374,55 @@ public class IA : MonoBehaviour
                 else if (nbValeurTrouve == 3)// la nouvelle valeur proposé n'est pas dans la combinaison
                 {   // nbValeurTrouve était déjà à 3
                     couleurDisponible[numCouleur, 1] = 0;
+                }
+                else
+                {
+                    Debug.Log("----> On ne devrait jamais être ici ! N= " + N + " B= " + B +
+                            ". nbValeur à une valeur anormale. nbValeur= " + nbValeurTrouve);
+                }
+
+                numCouleur++;
+                proposition = construitProposition(couleurDisponible);
+            }
+
+            else if ((N == 0) && (B == 3))
+            {
+                if (nbValeurTrouve == 0) // IMPOSSIBLE COMPTE TENU DE L'ALGO
+                {
+                    Debug.Log("----> On ne devrait jamais être ici ! N= " + N + " B= " + B +
+                            ". nbValeur ne devrait pas être = 0. nbValeur= " + nbValeurTrouve);
+                }
+                else if (nbValeurTrouve == 1)
+                {   // Une valeur avait été trouvé elle n'est pas à la bonne place
+                    //  la nouvelle valeur trouvé est en double
+                    nbValeurTrouve = 3;
+                    couleurDisponible[numCouleur, 1] = 2;
+
+// ------------------> tableau des places
+
+                    Debug.Log("<IA.LancerIA> : N== 0 && B == 3 : nbValeurTrouve == 1 passe numéro " + nbPasse +
+                        " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
+                }
+                else if (nbValeurTrouve == 2)
+                {   // Deux valeurs avaient été trouvé
+                    //  SI PERMUTATION DES 2 VALEURS CA DEVRAIT POSITIONNER LES 2 VALEURS A LEUR PLACE
+                    //  La nouvelle valeur est unique
+                    nbValeurTrouve = 3;
+                    couleurDisponible[numCouleur, 1] = 1;
+
+                    Debug.Log("<IA.LancerIA> : N== 0 && B == 3 : nbValeurTrouve == 2 passe numéro " + nbPasse +
+                                " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + 
+                                couleurDisponible[numCouleur, 1]);
+
+// ------------------> tableau des places
+
+                }
+                else if (nbValeurTrouve == 3)// la nouvelle valeur proposé n'est pas dans la combinaison
+                {   // nbValeurTrouve était déjà à 3
+                    couleurDisponible[numCouleur, 1] = 0;
+                    Debug.Log("<IA.LancerIA> : N== 0 && B == 3 : nbValeurTrouve == 3 passe numéro " + nbPasse +
+                                " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " +
+                                couleurDisponible[numCouleur, 1]);
                 }
                 else
                 {
