@@ -127,7 +127,7 @@ public class IA : MonoBehaviour
                 else // la nouvelle valeur proposé n'est pas dans la combinaison
                 {
                     couleurDisponible[numCouleur, 1] = 0;
-                    placement[numCouleurTrouve[0]] = new List<bool> { true, false, false, false };
+                    //placement[numCouleurTrouve[0]][0] = new List<bool> { true, false, false, false };
                     //Debug.Log("<IA.LancerIA> : (N == 1) && (B == 0) nbValeurTrouve != 0: La nouvelle valeur n'est pas " +
                     //    "dans la combinaison. La valeur précédemment trouvé est à la bonne place. passe numéro= " + nbPasse +
                     //   " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
