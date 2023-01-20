@@ -93,11 +93,49 @@ public class IA : MonoBehaviour
                 break;
             }
 
-            else if (N + B == Globales.NB_PION_LIGNE)
+            else if ( (N + B == Globales.NB_PION_LIGNE) && (N != 0) )
             {
                 Debug.Log("<IA.LancerIA> : Toutes les couleurs sont déterminées : passe numéro " + nbPasse);
 
+                // on ordonne les propositions par ordre croissant pour mieux gérer les doublons
+                proposition = ordonneProposition(proposition);
+                // On génère l'univers des possibles
+                for(int i= 0; i< proposition.Length;i++)
+                {
+                    for (int j = 0; j < proposition.Length; j++)
+                    {
+                        for (int k = 0; k < proposition.Length; k++)
+                        {
+                            for (int l = 0; l < proposition.Length; l++)
+                            {
+                                tableauDesPropositions.Add( new int[] {proposition[i], proposition[j], proposition[k], 
+                                    proposition[l]}  );
+                            }
+
+                        }
+
+                    }
+
+                }
+                //tableauDesPropositions.Add(proposition);
+
                 break;
+            }
+
+
+            else if ((N == 0) && (B == 4))
+            {
+                Debug.Log("<IA.LancerIA> : (N== 0) && (B==4) On lance B4N0 depuis le pricipal. nbpasse= " + nbPasse);
+
+                placement = B4N0(numCouleurTrouve, proposition, placement);
+
+                // Toute les couleurs ayant été trouvé, on met à 0 les valeur n'ayant pas été testées
+                for(int i= numCouleur+1; i < Globales.NB_COULEURS; i++)
+                {
+                    couleurDisponible[i, 1] = 0;
+                }
+
+
             }
 
             else if ((N == 0) && (B == 0))
@@ -276,8 +314,8 @@ public class IA : MonoBehaviour
                     nbValeurTrouve = 2;
                     couleurDisponible[numCouleur, 1] = 0;
 
-                    placement[numCouleurTrouve[0]][0] = false;// new List<bool> { true, true, false, false };
-                    placement[numCouleurTrouve[1]][1] = false;// new List<bool> { true, true, false, false };
+                    //placement[numCouleurTrouve[0]][0] = false;// new List<bool> { true, true, false, false };
+                    //placement[numCouleurTrouve[1]][1] = false;// new List<bool> { true, true, false, false };
 
                     //int pos = 0;
                     for(int i = 0; numCouleurTrouve[i] != -1; i++) // i< proposition.Length
@@ -468,8 +506,8 @@ public class IA : MonoBehaviour
                 //Debug.Log("----> 3B : numCouleurTrouve[0] : " + numCouleurTrouve[0]);
                 for (int i = 0; numCouleurTrouve[i] != -1; i++)
                 {
-                    placement[numCouleurTrouve[numCouleurTrouve[i]]][i] = false;
-                    Debug.Log("-------> 3B : numCouleurTrouve[i] : " + numCouleurTrouve[i] + " i= " + i);
+                    placement[numCouleurTrouve[i]][i] = false;
+                    //Debug.Log("-------> 3B : numCouleurTrouve[i] : " + numCouleurTrouve[i] + " i= " + i);
                 }
 
             }
@@ -494,16 +532,17 @@ public class IA : MonoBehaviour
                     Debug.Log("couleur: " + i + " place j " + j + " place[p[i]][j] " + placement[i][j]);
                 }
             }
+
             nbPasse++;
             if(nbPasse>= Globales.NB_LIGNE_MAX)
             {
                 Debug.Log("<IA.LancerIA> Nombre de coups max atteint : " + nbPasse);
                 break;
             }
-            numCouleur++;
-            proposition = construitProposition(couleurDisponible, placement, ("N :" + N + " B : " + B));
+            if(numCouleur < Globales.NB_COULEURS - 1) numCouleur++;
 
-           tableauDesPropositions.Add(proposition);
+            proposition = construitProposition(couleurDisponible, placement, ("N :" + N + " B : " + B + " np Passe= " + nbPasse));
+
 
 
         }
@@ -556,22 +595,6 @@ public class IA : MonoBehaviour
 
         }
 
-        // La proposition est construite mais ne tiens pas compte des positions interdites
-        //for (int ligne = 0; ligne < place.Length; ligne++)
-        //{
-        //    Debug.Log("");
-        //}
-
-        //Debug.Log("-----> " + debug);
-        //int nligne = 0;
-        //foreach (var ligne in place)
-        //{
-        //    for(int i= 0; i < ligne.Count; i++)
-        //    {
-        //        Debug.Log("couleur: " + nligne + " position: " + i + " possible ?: " + ligne[i]);
-        //    }
-        //    nligne++;
-        //}
 
         // On place la 1er couleur à la premiere place disponible
         for(int i= 0; i< p.Length; i++)
@@ -592,6 +615,33 @@ public class IA : MonoBehaviour
     }
 
 
+    private int[] ordonneProposition(int[] prop)
+    {
+        bool permutation = true;
+
+        while(permutation)
+        {
+            permutation = false;
+            for(int i= 0; i< prop.Length - 1; i++)
+            {
+                if (prop[i] > prop[i+1])
+                {
+                    int tmp= prop[i];
+
+                    prop[i] = prop[i + 1];
+                    prop[i + 1] = tmp;
+                    
+                    permutation = true;
+                }
+            }
+        }
+
+        return prop;
+
+    }
+
+
+
 
     private void rechercheCode()
     {
@@ -599,7 +649,21 @@ public class IA : MonoBehaviour
 
     }
 
+    private List<bool>[] B4N0(int[] nCT, int[] prop, List<bool>[] place)
+    {
+        Debug.Log("<IA.B4N0> : (N== 0) && (B==4) prop.Length= " + prop.Length);
 
+        for (int i = 0; i < Globales.NB_PION_LIGNE; i++) // i< proposition.Length // nCT[i] != -1
+        {
+            Debug.Log(">>>>> i= " + i + "prop[i]= " + prop[i]);
+            place[prop[i]][i] = false;
+            //        pos++;
+        }
+
+
+        return place;
+
+    }
 
 }
 
@@ -643,55 +707,3 @@ for (int i = 0; i < Globales.TAILLE_UNIVERS; Debug.Log("univers[i]: " + univers[
         }
  
 */
-
-/*
- while (true)
- {
-     // L'IA joue !
-     for(int i= 0; i<proposition.Length; i++)
-     {
-         ligneSecret.Ajoute_Pion_Ligne(proposition[i]);
-     }
-     reponse= ligneSecret.CheckResult();
-     //for (int i = 0; i < Globales.NB_PION_LIGNE; Debug.Log("reponse[i]: " + reponse[i]), i++) ;
-
-     // Test de la réponse
-     // A FAIRE
-
-     // On construit l'univers des possibles
-
-     for(int i= 0, indiceUniversTmp = 0; i < Globales.TAILLE_UNIVERS/Globales.NB_PION_LIGNE; i++)
-     {
-         bool different = false;
-         int[] tmp = { univers[i, 0], univers[i, 1], univers[i, 2], univers[i, 3] };
-         rechReponse = codeSecret.compareTableau(tmp);
-
-         for (int j = 0; j < Globales.NB_PION_LIGNE; j++)
-         {
-             if(rechReponse[j]!= reponse[j])
-             {
-                 different = true;
-                 break;
-             }
-         }
-         if(!different)
-         {
-             for(int k= 0; k< Globales.NB_PION_LIGNE; k++)
-             {
-                 universTmp[indiceUniversTmp, k] = tmp[k];
-             }
-             indiceUniversTmp++;
-         }
-     }
-
-     univers = universTmp.Clone() as int[,];
-
-
-     for (int i = 0; i < univers.Length / 4; Debug.Log("univers[i]: " + univers[i,0] + " - " + univers[i,1] + " - " +
-          univers[i,2] + " - " + univers[i,3] + " : " + i + " / " + univers.Length ), i++) ;
-
-
-
-     break;
- }
- */
