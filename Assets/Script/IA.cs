@@ -1,4 +1,5 @@
 using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
@@ -102,22 +103,8 @@ public class IA : MonoBehaviour
                 // on ordonne les propositions par ordre croissant pour mieux gérer les doublons
                 proposition = ordonneProposition(proposition);
                 // On génère l'univers des possibles
-                for(int i= 0; i< proposition.Length;i++)
-                {
-                    for (int j = 0; j < proposition.Length; j++)
-                    {
-                        for (int k = 0; k < proposition.Length; k++)
-                        {
-                            for (int l = 0; l < proposition.Length; l++)
-                            {
-                                tableauDesPropositions.Add( new int[] {proposition[i], proposition[j], proposition[k], 
-                                    proposition[l]}  );
-                            }
+                Permute(proposition, 0, 3);
 
-                        }
-
-                    }
-                }
 
                 int nligne = 0;
                 foreach(var ligne in tableauDesPropositions)
@@ -676,6 +663,40 @@ public class IA : MonoBehaviour
 
     }
 
+
+
+    static void Permute(int[] tab, int i, int n)
+    {
+        int j;
+        if (i == n)
+        {
+            string str = "";
+            for (int k = 0; k < 4; k++)
+            {
+                str += tab[k];
+            }
+
+            Debug.Log("Proposition: " + str);
+        }
+        else
+        {
+            for (j = i; j <= n; j++)
+            {
+                Swap(ref tab[i], ref tab[j]);
+                Permute(tab, i + 1, n);
+                Swap(ref tab[i], ref tab[j]);
+            }
+        }
+    }
+
+
+    static void Swap(ref int a, ref int b)
+    {
+        int tmp;
+        tmp = a;
+        a = b;
+        b = tmp;
+    }
 }
 
 
