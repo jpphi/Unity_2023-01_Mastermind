@@ -46,7 +46,7 @@ public class IA : MonoBehaviour
         List<bool>[] placement = new List<bool>[Globales.NB_COULEURS];
 
         bool bouclePrincipale = true;
-        int iu = 0;
+        int iu = 1;
 
         for (int i = 0; i < Globales.NB_COULEURS; i++)
         {
@@ -104,7 +104,6 @@ public class IA : MonoBehaviour
             else if ( (N + B == Globales.NB_PION_LIGNE) && (N != 0) )
             {
                 bouclePrincipale = false;
-                iu = 1;
                 Debug.Log("<IA.LancerIA> : Toutes les couleurs sont déterminées : passe numéro " + nbPasse);
 
                 // On récupère la proposition faite pour l'éliminer ensuite
@@ -560,7 +559,7 @@ public class IA : MonoBehaviour
             }
             else
             {
-                proposition = univers[iu];
+                univers[iu].CopyTo(proposition,0);
                 iu++;
             }
 
