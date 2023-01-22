@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
@@ -18,6 +19,9 @@ public class IA : MonoBehaviour
 
     //public GestionPartie gp = new GestionPartie();
 
+    public static List<int[]> univers= new List<int[]>();
+
+
     private void Start()
     {
         // Initialisation de l'univers des possibles
@@ -27,6 +31,7 @@ public class IA : MonoBehaviour
     }
     public void lancerIA()
     {
+
         //int indiceUniversTmp = 0;
 
         int[] proposition = new int[Globales.NB_PION_LIGNE];
@@ -39,6 +44,9 @@ public class IA : MonoBehaviour
         int[] numCouleurTrouve = new int[Globales.NB_PION_LIGNE];
 
         List<bool>[] placement = new List<bool>[Globales.NB_COULEURS];
+
+        bool bouclePrincipale = true;
+        int iu = 0;
 
         for (int i = 0; i < Globales.NB_COULEURS; i++)
         {
@@ -95,29 +103,35 @@ public class IA : MonoBehaviour
 
             else if ( (N + B == Globales.NB_PION_LIGNE) && (N != 0) )
             {
+                bouclePrincipale = false;
+                iu = 1;
                 Debug.Log("<IA.LancerIA> : Toutes les couleurs sont déterminées : passe numéro " + nbPasse);
 
                 // On récupère la proposition faite pour l'éliminer ensuite
-                tableauDesPropositions.Add(proposition);
+                //tableauDesPropositions.Add(proposition);
 
                 // on ordonne les propositions par ordre croissant pour mieux gérer les doublons
-                proposition = ordonneProposition(proposition);
+                //proposition = ordonneProposition(proposition);
                 // On génère l'univers des possibles
                 Permute(proposition, 0, 3);
 
+                // On retire la proposition précédente de l'univers
+                //univers.Remove(proposition);
 
-                int nligne = 0;
-                foreach(var ligne in tableauDesPropositions)
-                {
-                    Debug.Log("Ligne: " + nligne);
-                    for(int i= 0; i< ligne.Length; i++)
-                    {
-                        Debug.Log(" - " + ligne[i]);
-                    }
-                }
+                //affiche(univers);
+
+                //int nligne = 0;
+                //foreach(var ligne in tableauDesPropositions)
+                //{
+                //    Debug.Log("Ligne: " + nligne);
+                //    for(int i= 0; i< ligne.Length; i++)
+                //    {
+                //        Debug.Log(" - " + ligne[i]);
+                //    }
+                //}
                 //tableauDesPropositions.Add(proposition);
 
-                break;
+                //break;
             }
 
 
@@ -347,7 +361,7 @@ public class IA : MonoBehaviour
                     nbValeurTrouve = 3;
                     couleurDisponible[numCouleur, 1] = 3;
                     numCouleurTrouve[0] = numCouleur;
-                    placement[numCouleurTrouve[numCouleurTrouve[0]]] = new List<bool> { true, false, false, false };
+                    placement[numCouleurTrouve[0]] = new List<bool> { true, true, true, false };
                 }
                 else if (nbValeurTrouve == 1)
                 {   // Une valeur avait été trouvé, une nouvelle vient d'être trouvé et elle est double
@@ -356,8 +370,8 @@ public class IA : MonoBehaviour
                     couleurDisponible[numCouleur, 1] = 2;
  
                     numCouleurTrouve[1] = numCouleur;
-                    placement[numCouleurTrouve[numCouleurTrouve[0]]] = new List<bool> { true, false, false, false };
-                    placement[numCouleurTrouve[numCouleurTrouve[1]]] = new List<bool> { false, true, true, false };
+                    placement[numCouleurTrouve[0]] = new List<bool> { true, false, false, false };
+                    placement[numCouleurTrouve[1]] = new List<bool> { false, true, true, false };
 
                 }
                 else if (nbValeurTrouve == 2)
@@ -539,7 +553,17 @@ public class IA : MonoBehaviour
             }
             if(numCouleur < Globales.NB_COULEURS - 1) numCouleur++;
 
-            proposition = construitProposition(couleurDisponible, placement, ("N :" + N + " B : " + B + " np Passe= " + nbPasse));
+            if(bouclePrincipale)
+            {
+                proposition = construitProposition(couleurDisponible, placement, ("N :" + N + " B : " + B + " np Passe= " + nbPasse));
+
+            }
+            else
+            {
+                proposition = univers[iu];
+                iu++;
+            }
+
 
 
 
@@ -668,15 +692,29 @@ public class IA : MonoBehaviour
     static void Permute(int[] tab, int i, int n)
     {
         int j;
+
+
         if (i == n)
         {
-            string str = "";
-            for (int k = 0; k < 4; k++)
-            {
-                str += tab[k];
-            }
+            //affiche(tab, "Tab");
 
-            Debug.Log("Proposition: " + str);
+            bool valid = true;
+            int[] tmp = new int[tab.Length];
+            tab.CopyTo(tmp, 0);
+
+            foreach(var el in univers)
+            {
+                if(el.SequenceEqual(tmp))
+                {
+                    valid = false;
+                    break;
+                }
+
+            }
+            if(valid)
+            {
+                univers.Add(tmp);
+            }
         }
         else
         {
@@ -696,6 +734,25 @@ public class IA : MonoBehaviour
         tmp = a;
         a = b;
         b = tmp;
+    }
+
+    static void affiche(int[] t, string com)
+    {
+        string str = "";
+        for (int k = 0; k < 4; k++)
+        {
+            str += t[k];
+        }
+        Debug.Log(com + " - " + str);
+
+    }
+    static void affiche(List<int[]> l)
+    {
+        Debug.Log("Affichage de univers: + " + l.Count);
+        for(int i= 0; i < l.Count; i++)
+        {
+            affiche(l[i], "Affiche liste " + i + " - " + l[i][0] + l[i][1]+ l[i][2] + l[i][3] + " !!!! ");
+        }
     }
 }
 
