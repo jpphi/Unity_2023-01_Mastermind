@@ -21,9 +21,9 @@ public class Code : MonoBehaviour
         }
 
         ////  BLUE_COLOR CYAN_COLOR GREEN_COLOR PURPLE_COLOR RED_COLOR YELLOW_COLOR
-        tableau_couleur_code[0] = Globales.YELLOW_COLOR;
+        tableau_couleur_code[0] = Globales.RED_COLOR;
         tableau_couleur_code[1] = Globales.RED_COLOR;
-        tableau_couleur_code[2] = Globales.GREEN_COLOR;
+        tableau_couleur_code[2] = Globales.CYAN_COLOR;
         tableau_couleur_code[3] = Globales.BLUE_COLOR;
 
         //for (int i = 0; i < tableau_couleur_code.Length; Debug.Log("Code généré : " + tableau_couleur_code[i]), i++) ;

@@ -63,7 +63,6 @@ public class IA : MonoBehaviour
 
         // 1ère proposition
         proposition = construitProposition(couleurDisponible, placement, "Première initialisation");
-        tableauDesPropositions.Add(proposition);
 
         while (true)
         {
@@ -97,6 +96,9 @@ public class IA : MonoBehaviour
             {
                 Debug.Log("<IA.LancerIA> : Toutes les couleurs sont déterminées : passe numéro " + nbPasse);
 
+                // On récupère la proposition faite pour l'éliminer ensuite
+                tableauDesPropositions.Add(proposition);
+
                 // on ordonne les propositions par ordre croissant pour mieux gérer les doublons
                 proposition = ordonneProposition(proposition);
                 // On génère l'univers des possibles
@@ -115,7 +117,16 @@ public class IA : MonoBehaviour
                         }
 
                     }
+                }
 
+                int nligne = 0;
+                foreach(var ligne in tableauDesPropositions)
+                {
+                    Debug.Log("Ligne: " + nligne);
+                    for(int i= 0; i< ligne.Length; i++)
+                    {
+                        Debug.Log(" - " + ligne[i]);
+                    }
                 }
                 //tableauDesPropositions.Add(proposition);
 
@@ -138,8 +149,8 @@ public class IA : MonoBehaviour
 
             }
 
-            else if ((N == 0) && (B == 0))
-            {   // Aucune couleur ,n'a été trouvé
+            else if ((N == 0) && (B == 0)) // Aucune couleur ,n'a été trouvé
+            {   
                 couleurDisponible[numCouleur, 1] = 0;
                 //Debug.Log("<IA.LancerIA> : N== 0 La couleur proposé n'est pas dans le code : passe numéro " + nbPasse +
                 //    " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
@@ -524,14 +535,14 @@ public class IA : MonoBehaviour
             //-------- FIN DU TOUR
 
             // Affiche les placements possible
-            Debug.Log("-----> Passe= " + nbPasse);
-            for (int i = 0; i < placement.Length; i++)
-            {
-                for (int j = 0; j < proposition.Length; j++)
-                {
-                    Debug.Log("couleur: " + i + " place j " + j + " place[p[i]][j] " + placement[i][j]);
-                }
-            }
+            //Debug.Log("-----> Passe= " + nbPasse);
+            //for (int i = 0; i < placement.Length; i++)
+            //{
+            //    for (int j = 0; j < proposition.Length; j++)
+            //    {
+            //        Debug.Log("couleur: " + i + " place j " + j + " place[p[i]][j] " + placement[i][j]);
+            //    }
+            //}
 
             nbPasse++;
             if(nbPasse>= Globales.NB_LIGNE_MAX)
@@ -651,11 +662,11 @@ public class IA : MonoBehaviour
 
     private List<bool>[] B4N0(int[] nCT, int[] prop, List<bool>[] place)
     {
-        Debug.Log("<IA.B4N0> : (N== 0) && (B==4) prop.Length= " + prop.Length);
+        //Debug.Log("<IA.B4N0> : (N== 0) && (B==4) prop.Length= " + prop.Length);
 
         for (int i = 0; i < Globales.NB_PION_LIGNE; i++) // i< proposition.Length // nCT[i] != -1
         {
-            Debug.Log(">>>>> i= " + i + "prop[i]= " + prop[i]);
+            //Debug.Log(">>>>> i= " + i + "prop[i]= " + prop[i]);
             place[prop[i]][i] = false;
             //        pos++;
         }
@@ -707,3 +718,79 @@ for (int i = 0; i < Globales.TAILLE_UNIVERS; Debug.Log("univers[i]: " + univers[
         }
  
 */
+
+
+
+/*
+ 
+
+
+using System;
+					
+public class Program
+{
+	public static void Main()
+	{
+	int[] tab= new int[] {1,2,3,4};
+		
+	Permute(tab, 0, 3);
+	Console.ReadKey();	
+	}
+
+
+// Online C# Editor for free
+// Write, Edit and Run your C# code using C# Online Compiler
+
+	static void Permute(int[] arry, int i, int n)
+	{
+		int j;
+		if (i==n)
+		{
+			string str = "";
+			for( int k= 0; k < 4; k++)
+			{
+				str+= arry[k];
+			}
+				
+			Console.WriteLine(str);
+		}
+		else
+		{
+			for(j = i; j <=n; j++)
+			{
+				//int tmp= arry[i];
+				//arry[i]= arry[j];
+				//arry[j]= tmp;
+				//Swap2(arry, i, j);
+				Swap(ref arry[i], ref arry[j]);
+				Permute(arry,i+1,n);
+				//tmp= arry[i];
+				//arry[i]= arry[j];
+				//arry[j]= tmp;
+				//Swap2(arry, i, j); //backtrack
+				Swap(ref arry[i], ref arry[j]);
+			}
+		}
+	}
+
+	static void Swap2(int[] tab, int a, int b)
+	{
+		int tmp;
+		tmp = tab[a];
+		tab[a]= tab[b];
+		tab[b] = tmp;
+	}	
+	
+	static void Swap(ref int a, ref int b)
+	{
+		int tmp;
+		tmp = a;
+		a= b;
+		b = tmp;
+	}
+	
+}
+
+
+
+ */
