@@ -24,10 +24,10 @@ public class GestionPartie : MonoBehaviour
         //ab.OnIADecode += test;
     }
 
-    void test(int a)
-    {
-        Debug.Log("test" + a);
-    }
+    //void test(int a)
+    //{
+    //    Debug.Log("test" + a);
+    //}
             
     void Update()
     {
@@ -97,15 +97,17 @@ public class GestionPartie : MonoBehaviour
     }
 
 
-    public void OnAGagne() // Déclenché dans Ligne lorsque 4 marques noires sont donnée 
-    {
-        Debug.Log("On a Gagne !!!! " + Globales.SCORE);
-        FinPartie = true;
-    }
+    //public void OnAGagne() // Déclenché dans Ligne lorsque 4 marques noires sont donnée 
+    //{
+    //    Debug.Log("On a Gagne !!!! " + Globales.SCORE);
+    //    code.Triche();
+    //    FinPartie = true;
+    //}
 
-    public void recup(int a)
+    public void finIA(int a)
     {
-        Debug.Log("Recup : " + a);
+        Debug.Log("Fin du programme IA " + a);
+        code.Triche();
 
     }
 

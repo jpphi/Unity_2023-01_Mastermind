@@ -40,6 +40,7 @@ public class Ligne : Pion
 
     public bool Ajoute_Pion_Ligne(int couleur)
     {
+        bool valid;
         // On ne doit plus pouvoir ajouter de pion lorsque le nombre maximum de coups
         //  est atteint!
         if (LigneEnCours >= Globales.NB_LIGNE_MAX)
@@ -47,38 +48,36 @@ public class Ligne : Pion
             return false;
         }
 
-        if (nombreElementDansLigne== Globales.NB_PION_LIGNE)
-        { // La ligne est complète !
+        // L'élément suivant le dernier élément du tableau est l'élément 0 (tableau circulaire)
+        if (indicePion >= Globales.NB_PION_LIGNE)
+        {
+            indicePion = 0;
 
-            // L'élément suivant le dernier élément du tableau est l'élément 0 (tableau circulaire)
-            if (indicePion== Globales.NB_PION_LIGNE) indicePion = 0; 
+        }
 
-            // Detruire le pion existant avant d'en créer un nouveau
+        pos = new Vector3(-2 * indicePion, 5, 0);
+
+        if(pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE] != null)
+        { // un pion existe il faut d'abord le détruire
             Destroy(pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE]);
-
-            pos = new Vector3(-2 * indicePion + 2, 5, 0);
             pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE] = pion.CreationPion(pos, couleur);
-            TabCouleurPions[indicePion] = couleur;
-
-            //Debug.Log("4EL ELSE Dans Ligne création pion couleur: " + couleur);
-            //Debug.Log("L'indice est: " + indicePion + " la position est :" + pos);
-
-            indicePion++;
         }
         else
         {
-            pos = new Vector3(-2 * indicePion, 5, 0);
-
             pions[indicePion + LigneEnCours * Globales.NB_PION_LIGNE] = pion.CreationPion(pos, couleur);
-            TabCouleurPions[indicePion] = couleur;
-            //Debug.Log("Dans Ligne création pion couleur: " + couleur);
-            //Debug.Log("L'indice est: " + indicePion + " la position est :" + pos);
-
-            indicePion++;
-            nombreElementDansLigne++;
         }
 
-        return (nombreElementDansLigne== Globales.NB_PION_LIGNE);
+        TabCouleurPions[indicePion] = couleur;
+        indicePion++;
+
+        nombreElementDansLigne++;
+
+        valid = nombreElementDansLigne >= Globales.NB_PION_LIGNE;
+        //Debug.Log("nombreElementDansLigne " + nombreElementDansLigne + " valid " + valid + " indicePion" + indicePion);
+
+        //if(nombreElementDansLigne== )
+
+        return ( valid );
     }
 
     public int[] CheckResult()
@@ -88,12 +87,12 @@ public class Ligne : Pion
         int[] tcp = new int[Globales.NB_PION_LIGNE];
         int[] TabReponse = new int[Globales.NB_PION_LIGNE];
 
-        //Debug.Log("< Fonction CheckResult > " + transform.position);
-
+        nombreElementDansLigne = 0;
+        indicePion = 0;
         // POSER LA LIGNE AVEC LES MARQUES
 
         // On pose la ligne
-        for(int i=0; i<Globales.NB_PION_LIGNE; i++)
+        for (int i=0; i<Globales.NB_PION_LIGNE; i++)
         {
             x = 9 - 2 * i;
             y = 1;// 1f + (float)(LigneEnCours) / 3;
@@ -133,6 +132,8 @@ public class Ligne : Pion
         profondeur += 2;
 
         LigneEnCours++;
+
+        //nombreElementDansLigne= 0;
 
         return TabReponse;
 

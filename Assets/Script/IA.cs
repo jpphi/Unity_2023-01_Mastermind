@@ -26,7 +26,7 @@ public class IA : MonoBehaviour
     {
         // Initialisation de l'univers des possibles
 
-        OnIADecode += new IADecode(gp.recup);
+        OnIADecode += new IADecode(gp.finIA);
 
     }
     public void lancerIA()
@@ -628,7 +628,7 @@ public class IA : MonoBehaviour
             //}
 
             nbPasse++;
-            if(nbPasse>= Globales.NB_LIGNE_MAX)
+            if(nbPasse> Globales.NB_LIGNE_MAX)
             {
                 Debug.Log("<IA.LancerIA> Nombre de coups max atteint : " + nbPasse);
                 break;
@@ -748,30 +748,30 @@ public class IA : MonoBehaviour
     }
 
 
-    private int[] ordonneProposition(int[] prop)
-    {
-        bool permutation = true;
+    //private int[] ordonneProposition(int[] prop)
+    //{
+    //    bool permutation = true;
 
-        while(permutation)
-        {
-            permutation = false;
-            for(int i= 0; i< prop.Length - 1; i++)
-            {
-                if (prop[i] > prop[i+1])
-                {
-                    int tmp= prop[i];
+    //    while(permutation)
+    //    {
+    //        permutation = false;
+    //        for(int i= 0; i< prop.Length - 1; i++)
+    //        {
+    //            if (prop[i] > prop[i+1])
+    //            {
+    //                int tmp= prop[i];
 
-                    prop[i] = prop[i + 1];
-                    prop[i + 1] = tmp;
+    //                prop[i] = prop[i + 1];
+    //                prop[i + 1] = tmp;
                     
-                    permutation = true;
-                }
-            }
-        }
+    //                permutation = true;
+    //            }
+    //        }
+    //    }
 
-        return prop;
+    //    return prop;
 
-    }
+    //}
 
 
 
@@ -782,21 +782,21 @@ public class IA : MonoBehaviour
 
     }
 
-    private List<bool>[] B4N0(int[] nCT, int[] prop, List<bool>[] place)
-    {
-        //Debug.Log("<IA.B4N0> : (N== 0) && (B==4) prop.Length= " + prop.Length);
+    //private List<bool>[] B4N0(int[] nCT, int[] prop, List<bool>[] place)
+    //{
+    //    //Debug.Log("<IA.B4N0> : (N== 0) && (B==4) prop.Length= " + prop.Length);
 
-        for (int i = 0; i < Globales.NB_PION_LIGNE; i++) // i< proposition.Length // nCT[i] != -1
-        {
-            //Debug.Log(">>>>> i= " + i + "prop[i]= " + prop[i]);
-            place[prop[i]][i] = false;
-            //        pos++;
-        }
+    //    for (int i = 0; i < Globales.NB_PION_LIGNE; i++) // i< proposition.Length // nCT[i] != -1
+    //    {
+    //        //Debug.Log(">>>>> i= " + i + "prop[i]= " + prop[i]);
+    //        place[prop[i]][i] = false;
+    //        //        pos++;
+    //    }
 
 
-        return place;
+    //    return place;
 
-    }
+    //}
 
 
 
@@ -902,117 +902,3 @@ public class IA : MonoBehaviour
 
 
 
-
-/*
-for (int i = 0; i < Globales.TAILLE_UNIVERS; Debug.Log("univers[i]: " + univers[i,0] + " - " + univers[i,1] + " - " +
-    univers[i,2] + " - " + univers[i,3] + " : " + i + " / " + univers.Length ), i++) ;
-*/
-
-//int[] propositionInitiale = new int[Globales.NB_PION_LIGNE];
-
-
-/*
-        //List<int>[] univers= null;
-        int[,] univers = new int[Globales.TAILLE_UNIVERS, Globales.NB_PION_LIGNE];
-        int[,] universTmp = new int[Globales.TAILLE_UNIVERS + 1, Globales.NB_PION_LIGNE];
-
-        // Ce code ne peut s'adapter à un nombre de pions différents
-        // RECHERCHER UNE ALTERNATIVE
-        for (int i= 0, u= 0; i< Globales.NB_COULEURS; i++)
-        {
-            for (int j = 0; j < Globales.NB_COULEURS; j++)
-            {
-                for (int k = 0; k < Globales.NB_COULEURS; k++)
-                {
-
-                    for (int l = 0; l < Globales.NB_COULEURS; l++, u++)
-                    {
-                        //int[] t= { i,j,k,l};
-                        univers[u, 0] = i;
-                        univers[u, 1] = j;
-                        univers[u, 2] = k;
-                        univers[u, 3] = l;
-                        //univers[u,] = new int[,] {i,j,k,l };
-                    }
-                }
-
-            }
-        }
- 
-*/
-
-
-
-/*
- 
-
-
-using System;
-					
-public class Program
-{
-	public static void Main()
-	{
-	int[] tab= new int[] {1,2,3,4};
-		
-	Permute(tab, 0, 3);
-	Console.ReadKey();	
-	}
-
-
-// Online C# Editor for free
-// Write, Edit and Run your C# code using C# Online Compiler
-
-	static void Permute(int[] arry, int i, int n)
-	{
-		int j;
-		if (i==n)
-		{
-			string str = "";
-			for( int k= 0; k < 4; k++)
-			{
-				str+= arry[k];
-			}
-				
-			Console.WriteLine(str);
-		}
-		else
-		{
-			for(j = i; j <=n; j++)
-			{
-				//int tmp= arry[i];
-				//arry[i]= arry[j];
-				//arry[j]= tmp;
-				//Swap2(arry, i, j);
-				Swap(ref arry[i], ref arry[j]);
-				Permute(arry,i+1,n);
-				//tmp= arry[i];
-				//arry[i]= arry[j];
-				//arry[j]= tmp;
-				//Swap2(arry, i, j); //backtrack
-				Swap(ref arry[i], ref arry[j]);
-			}
-		}
-	}
-
-	static void Swap2(int[] tab, int a, int b)
-	{
-		int tmp;
-		tmp = tab[a];
-		tab[a]= tab[b];
-		tab[b] = tmp;
-	}	
-	
-	static void Swap(ref int a, ref int b)
-	{
-		int tmp;
-		tmp = a;
-		a= b;
-		b = tmp;
-	}
-	
-}
-
-
-
- */
