@@ -56,13 +56,6 @@ public class IA : MonoBehaviour
         {
             numCouleurTrouve[i] = -1;
         }
-        //placement[1] = new List<bool> { true, true, true, true };
-        //placement[2] = new List<bool> { true, true, true, true };
-        //placement[3] = new List<bool> { true, true, true, true };
-        //placement[4] = new List<bool> { true, true, true, true };
-        //placement[5] = new List<bool> { true, true, true, true };
-
-        //---------------- POURQUOI NE PAS PERMUTTER ELEMENT TABLEAU DES COULEURS ?
 
         int numCouleur = couleurDisponible[0, 0]; //, numCouleurPrecedente= -1, numCouleurPrecedentePrecedente = -1, numCouleurPrecedentePrecedentePrecedente = -1;
         int nbValeurTrouve = 0;
@@ -205,15 +198,26 @@ public class IA : MonoBehaviour
                 //placement = B4N0(numCouleurTrouve, proposition, placement);
 
                 //affiche(numCouleurTrouve, "Num couleur trouvé ");
-                for (int i = 0; i < Globales.NB_PION_LIGNE; i++) // i< proposition.Length // nCT[i] != -1
+                //for (int i = 0; i < Globales.NB_PION_LIGNE; i++) // i< proposition.Length // nCT[i] != -1
+                //{
+                //    //Debug.Log(">>>>> i= " + i + "prop[i]= " + prop[i]);
+                //    if (numCouleurTrouve[i]!= -1)
+                //    {
+                //        placement[numCouleurTrouve[i]][i] = false;
+                //    }
+                //    //affiche(placement,"test");
+                //}
+
+                for (int i = 0; (i < proposition.Length) && (numCouleurTrouve[i] != -1); i++)
                 {
-                    //Debug.Log(">>>>> i= " + i + "prop[i]= " + prop[i]);
-                    if (numCouleurTrouve[i]!= -1)
-                    {
-                        placement[numCouleurTrouve[i]][i] = false;
-                    }
-                    //affiche(placement,"test");
+                    placement[proposition[i]][i] = false;
+                    Debug.Log("-------> i: " + i + "numCouleurTrouve[i] = " + numCouleurTrouve[i] + " proposition[i]= " + 
+                        proposition[i]);
                 }
+
+
+
+
 
 
                 // Toute les couleurs ayant été trouvé, on met à 0 les valeur n'ayant pas été testées
@@ -551,11 +555,11 @@ public class IA : MonoBehaviour
                     //  la nouvelle valeur trouvé est en double
                     nbValeurTrouve = 3;
                     couleurDisponible[numCouleur, 1] = 2;
+                    numCouleurTrouve[1] = numCouleur;
+                    // ------------------> tableau des places
 
-// ------------------> tableau des places
-
-                //    Debug.Log("<IA.LancerIA> : N== 0 && B == 3 : nbValeurTrouve == 1 passe numéro " + nbPasse +
-                //        " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
+                    //    Debug.Log("<IA.LancerIA> : N== 0 && B == 3 : nbValeurTrouve == 1 passe numéro " + nbPasse +
+                    //        " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
                 }
                 else if (nbValeurTrouve == 2)
                 {   // Deux valeurs avaient été trouvé
@@ -563,12 +567,20 @@ public class IA : MonoBehaviour
                     //  La nouvelle valeur est unique
                     nbValeurTrouve = 3;
                     couleurDisponible[numCouleur, 1] = 1;
+                    for(int i = 0; i < nbValeurTrouve; i++)
+                    {
+                        if(numCouleurTrouve[i]== -1)
+                        {
+                            numCouleurTrouve[i] = numCouleur;
+                            break;
+                        }
+                    }
 
                     //Debug.Log("<IA.LancerIA> : N== 0 && B == 3 : nbValeurTrouve == 2 passe numéro " + nbPasse +
                     //            " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + 
                     //            couleurDisponible[numCouleur, 1]);
 
-// ------------------> tableau des places
+                    // ------------------> tableau des places
 
                 }
                 else if (nbValeurTrouve == 3)// la nouvelle valeur proposé n'est pas dans la combinaison
@@ -588,7 +600,7 @@ public class IA : MonoBehaviour
                 //Debug.Log("----> 3B : numCouleurTrouve[0] : " + numCouleurTrouve[0]);
                 for (int i = 0; numCouleurTrouve[i] != -1; i++)
                 {
-                    placement[numCouleurTrouve[i]][i] = false;
+                    placement[proposition[i]][i] = false;
                     //Debug.Log("-------> 3B : numCouleurTrouve[i] : " + numCouleurTrouve[i] + " i= " + i);
                 }
 
@@ -701,7 +713,7 @@ public class IA : MonoBehaviour
             {
                 if ((place[p[i]][j] == true) && pp[j] == -1) // p[i] est la i ème couleur de la combinaison j sa place possible
                 {
-                    Debug.Log("place[p[" + i + "]][" + j + "]= " + place[p[i]][j] + " pp[" + j + "]= " + pp[j] + " p[" + i + "]= " + p[i]);
+                    //Debug.Log("place[p[" + i + "]][" + j + "]= " + place[p[i]][j] + " pp[" + j + "]= " + pp[j] + " p[" + i + "]= " + p[i]);
                     pp[j] = p[i];
                     couleurPlacee = true;
                     break;

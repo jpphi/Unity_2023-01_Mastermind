@@ -12,11 +12,21 @@ BGGG 3 coups TRIVIAL
 YYGG 8 coups
 PCGY RESISTE
 YPCB 8 coups
-GGBC BUG sur 4 marques blanche
+GGBC BUG sur 4 marques blanche Corrigé. cassé en 10 passe
 CGPP 4 coups
 CRYG 9 coups
 CBYY 9 coups
 RRBY 8 coups
 PYCY 7 coups
+BPGP 5 coups
+GYRB 10 coups
+PCYR 7 coups
+RPBG RESISTE
 
 Sur 20 partie: 1Bug 2 résistes 17 cassé
+
+GRBC RESISTE MAUVAISE GESTION MARQUE BLANCHE CAR ON NE RENTRE PAS DANS LA 2 ème partie algo
+RPPB RESISTE
+YRBR RESISTE
+
+Bug CGYY Corrigé
