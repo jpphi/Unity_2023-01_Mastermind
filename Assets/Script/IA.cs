@@ -136,12 +136,87 @@ public class IA : MonoBehaviour
 
             else if ((N == 0) && (B == 4))
             {
-                Debug.Log("<IA.LancerIA> : (N== 0) && (B==4) On lance B4N0 depuis le pricipal. nbpasse= " + nbPasse);
+                Debug.Log("<IA.LancerIA> : (N== 0) && (B==4). nbpasse= " + nbPasse);
 
-                placement = B4N0(numCouleurTrouve, proposition, placement);
+ 
+                if (nbValeurTrouve == 0) // IMPOSSIBLE COMPTE TENU DE L'ALGO
+                {
+                    Debug.Log("----> On ne devrait jamais être ici ! N= " + N + " B= " + B +
+                            ". nbValeur ne devrait pas être = 0. nbValeur= " + nbValeurTrouve);
+                    break;
+                }
+
+
+                else if (nbValeurTrouve == 1)
+                {   // Une valeur avait été trouvé elle n'est pas à la bonne place
+                    //  la nouvelle valeur trouvé est en triple
+                    // Mais on devrait avoir 2 valeurs bien placé !!!! 
+                    
+                    //nbValeurTrouve = 3;
+                    //couleurDisponible[numCouleur, 1] = 2;
+
+                    Debug.Log("----> On ne devrait jamais être ici ! N= " + N + " B= " + B +
+                        ". nbValeur ne devrait pas être = 1. nbValeur= " + nbValeurTrouve + " On devrait avoir au mois 2 N ");
+                    break;
+                }
+
+
+
+                else if (nbValeurTrouve == 2)
+                {   // Deux valeurs avaient été trouvé et sont à la mauvaise place
+                    // 1 nouvelle valeur est trouvé et est en double. Elle est mal placé
+                    //  La nouvelle valeur est unique
+                    nbValeurTrouve = 4;
+                    couleurDisponible[numCouleur, 1] = 2;
+                    numCouleurTrouve[2] = numCouleur;
+                }
+
+
+                else if (nbValeurTrouve == 3)// la nouvelle valeur proposé n'est pas dans la combinaison
+                {   // Deux valeurs avaient été trouvé et sont à la mauvaise place
+                    // 1 nouvelle valeur est trouvé et est unique. Elle est mal placé
+                    nbValeurTrouve = 4;
+                    couleurDisponible[numCouleur, 1] = 1;
+                    numCouleurTrouve[3] = numCouleur;
+                    //Debug.Log("<IA.LancerIA> : N== 0 && B == 4 : nbValeurTrouve == 3 passe numéro " + nbPasse +
+                    //            " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " +
+                    //            couleurDisponible[numCouleur, 1]);
+                }
+
+
+
+
+
+
+
+
+
+
+                else if (nbValeurTrouve == 4)
+                {   // La nouvelle valeur proposé n'est pas dans la combinaison
+                    nbValeurTrouve = 4;
+                    couleurDisponible[numCouleur, 1] = 0;
+                    //Debug.Log("<IA.LancerIA> : N== 0 && B == 3 : nbValeurTrouve == 3 passe numéro " + nbPasse +
+                    //            " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " +
+                    //            couleurDisponible[numCouleur, 1]);
+                }
+
+                //placement = B4N0(numCouleurTrouve, proposition, placement);
+
+                affiche(numCouleurTrouve, "Num couleur trouvé ");
+                for (int i = 0; i < Globales.NB_PION_LIGNE; i++) // i< proposition.Length // nCT[i] != -1
+                {
+                    //Debug.Log(">>>>> i= " + i + "prop[i]= " + prop[i]);
+                    if (numCouleurTrouve[i]!= -1)
+                    {
+                        placement[numCouleurTrouve[i]][i] = false;
+                    }
+                    affiche(placement,"test");
+                }
+
 
                 // Toute les couleurs ayant été trouvé, on met à 0 les valeur n'ayant pas été testées
-                for(int i= numCouleur+1; i < Globales.NB_COULEURS; i++)
+                for (int i= numCouleur+1; i < Globales.NB_COULEURS; i++)
                 {
                     couleurDisponible[i, 1] = 0;
                 }
@@ -274,8 +349,6 @@ public class IA : MonoBehaviour
                     {
                         placement[numCouleurTrouve[0]][0] = true;// new List<bool> { true, true, false, false };
                         placement[numCouleurTrouve[0]][1] = true;// new List<bool> { true, true, false, false };
-                        //placement[numCouleurTrouve[0]][0] = true;// new List<bool> { true, true, false, false };
-                        //placement[numCouleurTrouve[0]][1] = true;// new List<bool> { true, true, false, false };
                     }
                     else if (couleurDisponible[numCouleurTrouve[0], 1] == 1) // 2 couleurs simples
                     {
@@ -385,9 +458,6 @@ public class IA : MonoBehaviour
                 else // la nouvelle valeur proposé n'est pas dans la combinaison
                 {   // nbValeurTrouve était déjà à 3
                     couleurDisponible[numCouleur, 1] = 0;
-                    //placement[numCouleurTrouve[numCouleurTrouve[0]]] = new List<bool> { true, false, false, false };
-                    //placement[numCouleurTrouve[numCouleurTrouve[1]]] = new List<bool> { false, true, false, false };
-                    //placement[numCouleurTrouve[numCouleurTrouve[2]]] = new List<bool> { false, false, true, false };
                 }
             }
 
@@ -555,6 +625,7 @@ public class IA : MonoBehaviour
             if(bouclePrincipale)
             {
                 proposition = construitProposition(couleurDisponible, placement, ("N :" + N + " B : " + B + " np Passe= " + nbPasse));
+                affiche(proposition, "proposition: ");
 
             }
             else
@@ -585,6 +656,10 @@ public class IA : MonoBehaviour
         int[] pp = new int[] {-1,-1,-1,-1};
         int ip = 0;
 
+        Debug.Log("Dans construction de la proposition: " + debug);
+        affiche(place, "Place ??? ");
+
+        //affiche(cd);
         //while(ip< Globales.NB_PION_LIGNE)
         for (int i = 0; i < Globales.NB_COULEURS; i++)
         {
@@ -616,20 +691,47 @@ public class IA : MonoBehaviour
 
         }
 
-
+        //affiche(p, "Et p ICI ??? ");
         // On place la 1er couleur à la premiere place disponible
-        for(int i= 0; i< p.Length; i++)
+        bool couleurPlacee = false;
+
+        for (int i = 0; i < p.Length; i++)
         {
+            couleurPlacee = false;
+
             for (int j = 0; j < p.Length; j++)
             {
-                if ( (place[p[i]][j] == true) && pp[j] == -1)
+                if ((place[p[i]][j] == true) && pp[j] == -1) // p[i] est la i ème couleur de la combinaison j sa place possible
                 {
-                    //Debug.Log("place[p[i]][j]= " + place[p[i]][j] + " pp[j]= " + pp[j] + " j= " + j + " p[i]= " + p[i] + " i=" + i);
+                    Debug.Log("place[p[" + i + "]][" + j + "]= " + place[p[i]][j] + " pp[" + j + "]= " + pp[j] + " p[" + i + "]= " + p[i]);
                     pp[j] = p[i];
+                    couleurPlacee = true;
                     break;
                 }
             }
+
+            if(!couleurPlacee)
+            {
+                break;
+            }
         }
+
+        if (!couleurPlacee) // S'il n'a pas été possible de placé toutes les couleurs, on décale simplement la combinaison d'entrée
+        {
+            int tmp, i;
+            tmp= p[0];
+            pp[0] = 2;
+            pp[2]= tmp;
+
+            for (i = 0; i < p.Length-1; i++)
+            {
+                pp[i] = p[i+1];
+            }
+            pp[i] = p[0];
+
+        }
+        
+        affiche(pp, "Et pp ICI ??? ");
 
         return pp;
 
@@ -745,14 +847,47 @@ public class IA : MonoBehaviour
         Debug.Log(com + " - " + str);
 
     }
+    static void affiche(List<bool>[] t, string com)
+    {
+        string str = "";
+        for (int k = 0; k < 4; k++)
+        {
+            for (int kk = 0; kk < 4; kk++)
+            {
+                str += t[k][kk];
+            }
+            str += " - ";
+        }
+        Debug.Log(com + " - " + str);
+
+    }
     static void affiche(List<int[]> l)
     {
-        Debug.Log("Affichage de univers: + " + l.Count);
-        for(int i= 0; i < l.Count; i++)
+        Debug.Log("Affichage de liste: + " + l.Count);
+        for (int i = 0; i < l.Count; i++)
         {
-            affiche(l[i], "Affiche liste " + i + " - " + l[i][0] + l[i][1]+ l[i][2] + l[i][3] + " !!!! ");
+            affiche(l[i], "Affiche liste " + i + " - " + l[i][0] + l[i][1] + l[i][2] + l[i][3] + " !!!! ");
         }
     }
+    static void affiche(int[,] cd)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            for(int j= 0; j<2 ;j++)
+            {
+                Debug.Log("cd[" + i + "," + j+"]" + cd[i,j]);   
+
+            }
+        }
+    }
+    //static void affiche(List<bool>[] l)
+    //{
+    //    Debug.Log("Affichage de liste: + " + l.Length);
+    //    for (int i = 0; i < l.Length; i++)
+    //    {
+    //        affiche(l[i], "Affiche liste " + i + " - " + l[i][0] + l[i][1] + l[i][2] + l[i][3] + " !!!! ");
+    //    }
+    //}
 }
 
 

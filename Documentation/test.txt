@@ -1,0 +1,22 @@
+CGRY 6 coups
+GBBR 11 coups => Gestion des BBBB dans la phase final à revoir car on 	doit tenir compte des placements des pions et éliminer les 	impossible de l'univers !!!
+BBYC 7 coups
+RPBG RESISTE à cause de la mauvaise gestion des impossible
+PGRB 11 coups
+CYPB 10 coups
+CPYR 7 coups
+YPBP 7 coups
+BCCC 2 coups TRIVIAL
+YYPB 11 coups
+BGGG 3 coups TRIVIAL
+YYGG 8 coups
+PCGY RESISTE
+YPCB 8 coups
+GGBC BUG sur 4 marques blanche
+CGPP 4 coups
+CRYG 9 coups
+CBYY 9 coups
+RRBY 8 coups
+PYCY 7 coups
+
+Sur 20 partie: 1Bug 2 résistes 17 cassé
