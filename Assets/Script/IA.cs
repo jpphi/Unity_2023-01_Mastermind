@@ -103,7 +103,6 @@ public class IA : MonoBehaviour
 
             else if ( (N + B == Globales.NB_PION_LIGNE) && (N != 0) )
             {
-                bouclePrincipale = false;
                 Debug.Log("<IA.LancerIA> : Toutes les couleurs sont déterminées : passe numéro " + nbPasse);
 
                 // On récupère la proposition faite pour l'éliminer ensuite
@@ -112,7 +111,9 @@ public class IA : MonoBehaviour
                 // on ordonne les propositions par ordre croissant pour mieux gérer les doublons
                 //proposition = ordonneProposition(proposition);
                 // On génère l'univers des possibles
-                Permute(proposition, 0, 3);
+                if(bouclePrincipale) Permute(proposition, 0, 3);
+
+                bouclePrincipale = false;
 
                 // On retire la proposition précédente de l'univers
                 //univers.Remove(proposition);
@@ -203,7 +204,7 @@ public class IA : MonoBehaviour
 
                 //placement = B4N0(numCouleurTrouve, proposition, placement);
 
-                affiche(numCouleurTrouve, "Num couleur trouvé ");
+                //affiche(numCouleurTrouve, "Num couleur trouvé ");
                 for (int i = 0; i < Globales.NB_PION_LIGNE; i++) // i< proposition.Length // nCT[i] != -1
                 {
                     //Debug.Log(">>>>> i= " + i + "prop[i]= " + prop[i]);
@@ -211,7 +212,7 @@ public class IA : MonoBehaviour
                     {
                         placement[numCouleurTrouve[i]][i] = false;
                     }
-                    affiche(placement,"test");
+                    //affiche(placement,"test");
                 }
 
 
@@ -334,17 +335,20 @@ public class IA : MonoBehaviour
                     // On ne peut rien déduire sur la couleur ayant la bonne position
                     nbValeurTrouve = 2;
                     couleurDisponible[numCouleur, 1] = 1;
-                    numCouleurTrouve[0] = numCouleur;
+                    numCouleurTrouve[1] = numCouleur;
                     //Debug.Log("<IA.LancerIA> : N== 2 && B == 0 : nb_valeur= 1 passe numéro " + nbPasse +
                     //   " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
 
                 }
-                else // la nouvelle valeur proposé n'est pas dans la combinaison
-                {   // nbValeurTrouve était déjà à 2
-                    // Soit 1 couleur double, soit 2 couleurs. Toutes les couleurs sont à la bonne place.
+                else
+                {   
+                    // nbValeurTrouve était déjà à 2 => la nouvelle valeur proposé n'est pas dans la combinaison
+                    couleurDisponible[numCouleur, 1] = 0;
 
-                    //Debug.Log("numCouleurTrouve[0]" + numCouleurTrouve[0] + "couleurDisponible[numCouleurTrouve[0], 1] " +
-                    //    "couleurDisponible[numCouleurTrouve[0], 1]");
+                    affiche(placement, "Placement N= " + N + " B= " + B + " nbValeurTrouve= " + nbValeurTrouve +
+                        " numCouleurTrouve[0]= " + numCouleurTrouve[0] + " numCouleurTrouve[1]= " + numCouleurTrouve[1]);
+
+                    // Soit 1 couleur double, soit 2 couleurs simple. Toutes les couleurs sont à la bonne place.
                     if (couleurDisponible[numCouleurTrouve[0], 1] == 2) // 1 couleur en double
                     {
                         placement[numCouleurTrouve[0]][0] = true;// new List<bool> { true, true, false, false };
@@ -355,9 +359,6 @@ public class IA : MonoBehaviour
                         placement[numCouleurTrouve[0]][0] = true;// new List<bool> { true, false, false, false };
                         placement[numCouleurTrouve[1]][1] = true; // new List<bool> { false, true, false, false };
                     }
-
-                    // La couleur tester n'est pas dans la combinaison
-                    couleurDisponible[numCouleur, 1] = 0;
                     //Debug.Log("<IA.LancerIA> : N== 2 && B == 0 : nb_valeur= 2 passe numéro " + nbPasse +
                     //   " couleur= " + numCouleur + " couleurDisponible[numCouleur,1]= " + couleurDisponible[numCouleur, 1]);
                 }
@@ -633,9 +634,6 @@ public class IA : MonoBehaviour
                 univers[iu].CopyTo(proposition,0);
                 iu++;
             }
-
-
-
 
         }
 
