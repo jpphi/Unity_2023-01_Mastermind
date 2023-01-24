@@ -13,12 +13,6 @@ public class Pion : MonoBehaviour
 
     public GameObject CreationPion(Vector3 pos, int couleur)
     {
-        //float smooth = 2.0f;
-        //Vector3 newScale = new Vector3(0.05f, 1f, 0.033f); // Les dimensions souhaités
-
-        //pionpion = Instantiate<GameObject>(forme, pos, rot);
-        // On crée l'objet dans la hiérarchie MasterMind (donc en tant qu'enfant) et pas dans plateau
-        //   pour éviter le problème de la transmission du scale parent enfant
         pionpion = Instantiate<GameObject>(forme, plat.transform);
 
         pionpion.transform.localPosition = pos; //position

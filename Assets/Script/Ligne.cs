@@ -75,8 +75,6 @@ public class Ligne : Pion
         valid = nombreElementDansLigne >= Globales.NB_PION_LIGNE;
         //Debug.Log("nombreElementDansLigne " + nombreElementDansLigne + " valid " + valid + " indicePion" + indicePion);
 
-        //if(nombreElementDansLigne== )
-
         return ( valid );
     }
 

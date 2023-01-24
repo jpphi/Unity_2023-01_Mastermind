@@ -9,12 +9,7 @@ public class GestionPartie : MonoBehaviour
     [SerializeField] protected Code code;
     [SerializeField] protected Ligne ligne;
 
-    //private int indicePion;
-    //Vector3 pos;
     bool ligneComplete, FinPartie;
-    //private int[] CodeCouleur = new int[Globales.NB_PION_LIGNE];
-
-    //IA ab = new IA();
 
     void Start()
     {
@@ -23,12 +18,7 @@ public class GestionPartie : MonoBehaviour
         ligneComplete = FinPartie= false;
         //ab.OnIADecode += test;
     }
-
-    //void test(int a)
-    //{
-    //    Debug.Log("test" + a);
-    //}
-            
+           
     void Update()
     {
         if (!FinPartie)
@@ -110,7 +100,4 @@ public class GestionPartie : MonoBehaviour
         code.Triche();
 
     }
-
-
-
 }

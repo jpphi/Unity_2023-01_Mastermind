@@ -9,7 +9,6 @@ public class Marque : MonoBehaviour
     private GameObject marqueMarque;
 
     private Quaternion rot = new Quaternion(0, 0, 0, 0);
-
     public GameObject CreationMarque(Vector3 pos, int couleur)
     {
 
